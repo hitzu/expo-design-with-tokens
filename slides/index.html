@@ -1,0 +1,1612 @@
+<!doctype html>
+<html lang="es" data-theme="nocturne">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design Tokens y multitenancy visual</title>
+
+<!--
+  ===========================================================================
+  ESTAS MISMAS SLIDES USAN LO QUE ESTOY EXPLICANDO
+  ===========================================================================
+  Todo el color, la tipografía y la forma de este deck sale del bloque de
+  tokens de abajo. Tres niveles, igual que demo/src/themes/themes.json:
+
+    1. Primitivos   → la paleta cruda (--rosa-300, --neon-magenta-400…)
+    2. Semánticos   → roles por familia (--surface, --on-surface, --accent…)
+    3. Componentes  → decisiones de un componente (--btn-bg, --code-bg…)
+
+  Cambiar de tema = cambiar el atributo data-theme del <html> (tecla «t»).
+  Fuera del bloque de tokens no hay ni un solo hex… salvo en el antipatrón
+  de la diapositiva 11, que está ahí a propósito.
+  ===========================================================================
+-->
+<style>
+/* ==========================================================================
+   NIVEL 1 · PRIMITIVOS
+   La paleta cruda de cada tenant. Nombres de material, no de uso.
+   Ningún componente los lee directamente: solo los semánticos.
+   Mismos valores que demo/src/themes/themes.json.
+   ========================================================================== */
+:root {
+  /* — Casa Aurora: crema, rosa, cacao, salvia, miel — */
+  --crema-50: #fdf8f2;
+  --crema-100: #f7eee3;
+  --blanco-0: #fffdfa;
+  --rosa-100: #fbe6ec;
+  --rosa-300: #f2b6c4;
+  --rosa-600: #c45a74;
+  --cacao-200: #e8dacc;
+  --cacao-400: #a6876f;
+  --cacao-600: #7a5a48;
+  --cacao-900: #3a2419;
+  --salvia-400: #9db592;
+  --salvia-700: #4e6b4b;
+  --frambuesa-700: #b23a48;
+  --miel-300: #f3d9a4;
+  --miel-700: #8a5a12;
+  --font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  --radius-soft-sm: 10px;
+  --radius-soft-md: 18px;
+  --radius-soft-lg: 28px;
+  --shadow-soft: 0 22px 44px -26px rgba(58, 36, 25, 0.38);
+  --shadow-softer: 0 8px 20px -12px rgba(58, 36, 25, 0.30);
+
+  /* — Nocturne: noche, humo y neones — */
+  --noche-950: #07060d;
+  --noche-900: #100e1b;
+  --noche-800: #1a1730;
+  --noche-700: #2a2648;
+  --violeta-400: #6e68b0;
+  --humo-50: #f5f2ff;
+  --humo-400: #a7a3c4;
+  --neon-magenta-400: #ff2bd6;
+  --neon-cyan-400: #22e4ff;
+  --neon-lima-400: #b6ff3b;
+  --neon-rojo-400: #ff4d6d;
+  --neon-ambar-400: #ffc53d;
+  --font-condensed: "Avenir Next Condensed", "Arial Narrow", "Roboto Condensed", "Helvetica Neue", system-ui, sans-serif;
+  --radius-none: 0px;
+  --radius-hair: 2px;
+  --glow-magenta: 0 0 0 1px rgba(255, 43, 214, 0.55), 0 0 32px -4px rgba(255, 43, 214, 0.45);
+  --glow-cyan: 0 0 0 1px rgba(34, 228, 255, 0.55), 0 0 22px -4px rgba(34, 228, 255, 0.45);
+
+  /* — Compartidos por el deck (no son de ningún tenant) — */
+  --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  --font-system: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* ==========================================================================
+   NIVEL 2 · SEMÁNTICOS
+   Los MISMOS nombres de rol en los dos temas; distinto valor en cada uno.
+   Este es el contrato que leen los componentes.
+   ========================================================================== */
+[data-theme="aurora"] {
+  /* Superficies */
+  --surface: var(--crema-50);
+  --surface-elevated: var(--blanco-0);
+  --surface-overlay: var(--crema-100);
+  /* Contenido */
+  --on-surface: var(--cacao-900);
+  --text-muted: var(--cacao-600);
+  /* Acento */
+  --accent: var(--rosa-300);
+  --on-accent: var(--cacao-900);
+  /* Bordes */
+  --border: var(--cacao-400);
+  --border-subtle: var(--cacao-200);
+  /* Estados */
+  --success: var(--salvia-700);
+  --error: var(--frambuesa-700);
+  --warning: var(--miel-700);
+  --focus: var(--rosa-600);
+  /* Ilustración */
+  --art-bg: var(--rosa-100);
+  --art-1: var(--rosa-300);
+  --art-2: var(--salvia-400);
+  --art-3: var(--miel-300);
+  /* Tipografía */
+  --font-body: var(--font-serif);
+  --font-heading: var(--font-serif);
+  --heading-weight: 500;
+  --heading-style: italic;
+  --heading-transform: none;
+  --heading-tracking: -0.01em;
+  /* Forma */
+  --radius-sm: var(--radius-soft-sm);
+  --radius-md: var(--radius-soft-md);
+  --radius-lg: var(--radius-soft-lg);
+  --border-width: 1px;
+  /* Elevación */
+  --shadow-card: var(--shadow-soft);
+  --shadow-raised: var(--shadow-softer);
+}
+
+[data-theme="nocturne"] {
+  /* Superficies */
+  --surface: var(--noche-950);
+  --surface-elevated: var(--noche-900);
+  --surface-overlay: var(--noche-800);
+  /* Contenido */
+  --on-surface: var(--humo-50);
+  --text-muted: var(--humo-400);
+  /* Acento */
+  --accent: var(--neon-magenta-400);
+  --on-accent: var(--noche-950);
+  /* Bordes */
+  --border: var(--violeta-400);
+  --border-subtle: var(--noche-700);
+  /* Estados */
+  --success: var(--neon-lima-400);
+  --error: var(--neon-rojo-400);
+  --warning: var(--neon-ambar-400);
+  --focus: var(--neon-cyan-400);
+  /* Ilustración */
+  --art-bg: var(--noche-800);
+  --art-1: var(--neon-magenta-400);
+  --art-2: var(--neon-cyan-400);
+  --art-3: var(--neon-lima-400);
+  /* Tipografía */
+  --font-body: var(--font-condensed);
+  --font-heading: var(--font-condensed);
+  --heading-weight: 800;
+  --heading-style: normal;
+  --heading-transform: uppercase;
+  --heading-tracking: 0.08em;
+  /* Forma */
+  --radius-sm: var(--radius-none);
+  --radius-md: var(--radius-hair);
+  --radius-lg: var(--radius-hair);
+  --border-width: 2px;
+  /* Elevación */
+  --shadow-card: var(--glow-magenta);
+  --shadow-raised: var(--glow-cyan);
+}
+
+/* ==========================================================================
+   NIVEL 3 · COMPONENTES
+   Decisiones de un componente concreto, siempre apuntando a un semántico.
+   Se declaran sobre [data-theme] (no sobre :root) para que cualquier
+   envoltorio con data-theme propio —como las maquetas de la slide 2—
+   resuelva sus propios valores.
+   ========================================================================== */
+[data-theme] {
+  /* Deck */
+  --deck-bg: var(--surface);
+  --deck-fg: var(--on-surface);
+  --deck-muted: var(--text-muted);
+  --deck-rule: var(--border-subtle);
+  --progress-bg: var(--accent);
+  --chrome-bg: var(--surface-elevated);
+  --overlay-bg: var(--surface-elevated);
+  --overlay-border: var(--border);
+
+  /* Botón */
+  --btn-bg: var(--accent);
+  --btn-fg: var(--on-accent);
+  --btn-radius: var(--radius-lg);
+  --btn-secondary-fg: var(--on-surface);
+  --btn-secondary-border: var(--border);
+
+  /* Tarjeta */
+  --card-bg: var(--surface-elevated);
+  --card-fg: var(--on-surface);
+  --card-border: var(--border-subtle);
+  --card-radius: var(--radius-lg);
+  --card-shadow: var(--shadow-card);
+
+  /* Bloques de código: coloreado mínimo con roles de estado */
+  --code-bg: var(--surface-overlay);
+  --code-fg: var(--on-surface);
+  --code-border: var(--border-subtle);
+  --code-keyword: var(--focus);
+  --code-string: var(--success);
+  --code-number: var(--warning);
+  --code-comment: var(--text-muted);
+  --code-add: var(--success);
+  --code-remove: var(--error);
+
+  /* Tabla */
+  --table-head-bg: var(--surface-overlay);
+  --table-rule: var(--border-subtle);
+}
+
+/* Mismas claves de componente, distinta decisión por tema
+   (igual que btn-radius en themes.json). */
+[data-theme="aurora"] {
+  --deck-emphasis: var(--focus);   /* el rosa pastel no se lee como texto */
+  --logo-radius: var(--radius-lg);
+}
+[data-theme="nocturne"] {
+  --deck-emphasis: var(--accent);  /* el neón sí se lee sobre la noche */
+  --card-border: var(--border);
+  --btn-radius: var(--radius-sm);
+  --logo-radius: var(--radius-sm);
+}
+/* ====================== FIN DEL BLOQUE DE TOKENS ====================== */
+</style>
+
+<style>
+/* ==========================================================================
+   ESTILOS DEL DECK
+   A partir de aquí solo se leen tokens semánticos y de componente.
+   ========================================================================== */
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: var(--deck-bg);
+  color: var(--deck-fg);
+  font-family: var(--font-body);
+}
+/* Las transiciones se activan tras el primer pintado (clase is-ready),
+   para no animar la carga inicial ni el tema guardado. */
+html.is-ready,
+html.is-ready body { transition: background-color 0.35s ease, color 0.35s ease; }
+
+/* --- Escenario 16:9 ---------------------------------------------------------
+   Diseñamos a 1600×900 y escalamos para encajar en cualquier pantalla.
+   Así nada se desborda ni a 1280×720 ni a 1920×1080. */
+.stage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1600px;
+  height: 900px;
+  transform: translate(-50%, -50%) scale(var(--stage-scale, 1));
+  transform-origin: center center;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  padding: 64px 110px 104px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 32px;
+  font-size: 34px;
+  line-height: 1.35;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(40px);
+}
+.slide.is-past { transform: translateX(-40px); }
+.slide.is-active {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+html.is-ready .slide { transition: opacity 0.4s ease, transform 0.4s ease, visibility 0s linear 0.4s; }
+html.is-ready .slide.is-active { transition: opacity 0.4s ease, transform 0.4s ease, visibility 0s; }
+
+@media (prefers-reduced-motion: reduce) {
+  html.is-ready, html.is-ready body, html.is-ready .slide, html.is-ready .slide.is-active, html.is-ready .progress__bar { transition: none !important; }
+  .slide, .slide.is-past { transform: none; }
+}
+
+/* --- Tipografía ------------------------------------------------------------ */
+h1, h2, h3,
+.heading {
+  font-family: var(--font-heading);
+  font-weight: var(--heading-weight);
+  font-style: var(--heading-style);
+  text-transform: var(--heading-transform);
+  letter-spacing: var(--heading-tracking);
+  line-height: 1.08;
+  margin: 0;
+}
+h1 { font-size: 92px; }
+h2 { font-size: 62px; }
+h3 { font-size: 34px; }
+p { margin: 0; }
+
+.kicker {
+  font-family: var(--font-mono);
+  font-size: 22px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--deck-muted);
+}
+.lead { font-size: 38px; color: var(--deck-muted); max-width: 1250px; }
+.muted { color: var(--deck-muted); }
+.em { color: var(--deck-emphasis); }
+.small { font-size: 24px; }
+.center { text-align: center; align-items: center; }
+
+.thesis {
+  margin: 0;
+  padding: 28px 0 28px 40px;
+  border-left: calc(var(--border-width) * 6) solid var(--deck-emphasis);
+  font-size: 40px;
+  line-height: 1.35;
+  max-width: 1300px;
+}
+.thesis strong { color: var(--deck-emphasis); font-weight: 700; }
+
+code,
+.mono { font-family: var(--font-mono); }
+:not(pre) > code {
+  font-size: 0.85em;
+  padding: 0.05em 0.3em;
+  border-radius: var(--radius-sm);
+  background: var(--code-bg);
+}
+
+/* --- Bloques de código ----------------------------------------------------- */
+pre.code {
+  margin: 0;
+  padding: 26px 32px;
+  background: var(--code-bg);
+  color: var(--code-fg);
+  border: var(--border-width) solid var(--code-border);
+  border-radius: var(--radius-md);
+  font-family: var(--font-mono);
+  font-size: 25px;
+  line-height: 1.5;
+  white-space: pre;
+  text-align: left;
+  overflow: hidden;
+  text-transform: none;
+  letter-spacing: 0;
+}
+pre.code.sm { font-size: 21px; padding: 20px 26px; }
+.code .k { color: var(--code-keyword); font-weight: 700; }
+.code .s { color: var(--code-string); }
+.code .n { color: var(--code-number); }
+.code .c { color: var(--code-comment); font-style: italic; }
+.code .add { color: var(--code-add); }
+.code .del { color: var(--code-remove); }
+.code-title {
+  font-family: var(--font-mono);
+  font-size: 20px;
+  color: var(--deck-muted);
+  margin-bottom: 10px;
+}
+
+/* Fragmentos que dependen del tema activo del deck (slide 7) */
+html[data-theme="aurora"] .only-nocturne,
+html[data-theme="nocturne"] .only-aurora { display: none; }
+
+/* --- Utilidades de layout -------------------------------------------------- */
+.row { display: flex; gap: 40px; align-items: stretch; }
+.col { display: flex; flex-direction: column; gap: 24px; }
+.grow { flex: 1 1 0; min-width: 0; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+
+.card {
+  background: var(--card-bg);
+  color: var(--card-fg);
+  border: var(--border-width) solid var(--card-border);
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
+  padding: 28px 32px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 16px 30px;
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  border: none;
+  border-radius: var(--btn-radius);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 26px;
+  text-transform: var(--heading-transform);
+  letter-spacing: var(--heading-tracking);
+}
+
+/* --- Chrome: barra de progreso y pie --------------------------------------- */
+.progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: var(--deck-rule);
+  z-index: 10;
+}
+.progress__bar {
+  height: 100%;
+  width: 0;
+  background: var(--progress-bg);
+}
+html.is-ready .progress__bar { transition: width 0.35s ease; }
+
+.chrome {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 20px;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--deck-muted);
+  z-index: 10;
+}
+.chrome__right { display: flex; align-items: center; gap: 14px; }
+.chrome button {
+  font: inherit;
+  color: var(--deck-fg);
+  background: var(--chrome-bg);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 6px 12px;
+  cursor: pointer;
+}
+.chrome button:focus-visible,
+.overlay:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.swatch-dot {
+  display: inline-block;
+  width: 0.9em;
+  height: 0.9em;
+  margin-right: 6px;
+  vertical-align: -0.12em;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 1px solid var(--border);
+}
+
+/* --- Overlays (notas y ayuda) ---------------------------------------------- */
+.overlay {
+  position: fixed;
+  z-index: 20;
+  background: var(--overlay-bg);
+  color: var(--deck-fg);
+  border: var(--border-width) solid var(--overlay-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-raised);
+  font-family: var(--font-system);
+}
+.overlay[hidden] { display: none; }
+.overlay--notes {
+  left: 20px;
+  right: 20px;
+  bottom: 56px;
+  max-height: 40vh;
+  overflow: auto;
+  padding: 18px 24px;
+  font-size: clamp(15px, 1.5vw, 22px);
+  line-height: 1.45;
+}
+.overlay--help {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(560px, 92vw);
+  padding: 24px 30px;
+  font-size: clamp(14px, 1.4vw, 18px);
+}
+.overlay h4 {
+  margin: 0 0 10px;
+  font-family: var(--font-mono);
+  font-size: 0.8em;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--deck-muted);
+}
+.overlay dl { display: grid; grid-template-columns: auto 1fr; gap: 8px 18px; margin: 0; }
+.overlay dd { margin: 0; }
+kbd {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  padding: 2px 8px;
+  border: 1px solid var(--border);
+  border-bottom-width: 3px;
+  border-radius: var(--radius-sm);
+  background: var(--surface-overlay);
+}
+/* Las notas viven ocultas dentro de cada slide; el overlay las copia. */
+.slide .notes { display: none; }
+
+/* ==========================================================================
+   COMPONENTES DE SLIDES CONCRETAS
+   ========================================================================== */
+
+/* --- Slide 1 · Portada ----------------------------------------------------- */
+.cover h1 { max-width: 1300px; }
+.cover .hint { font-size: 22px; color: var(--deck-muted); font-family: var(--font-mono); }
+
+/* --- Slides 2 y 11 · Maquetas de página ------------------------------------
+   Cada maqueta lleva su propio data-theme: los tokens de componente se
+   resuelven dentro del envoltorio, sin importar el tema del deck. */
+.mock {
+  background: var(--surface);
+  color: var(--on-surface);
+  font-family: var(--font-body);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+.mock__bar {
+  display: flex;
+  gap: 8px;
+  padding: 10px 14px;
+  background: var(--surface-overlay);
+  border-bottom: var(--border-width) solid var(--border-subtle);
+}
+.mock__bar i {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--border);
+}
+.mock__header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 26px;
+  border-bottom: var(--border-width) solid var(--border-subtle);
+}
+.mock__logo {
+  width: 42px;
+  height: 42px;
+  border-radius: var(--logo-radius);
+  background: var(--accent);
+}
+.mock__brand { font-family: var(--font-heading); font-weight: var(--heading-weight); font-style: var(--heading-style); text-transform: var(--heading-transform); letter-spacing: var(--heading-tracking); font-size: 24px; }
+.mock__nav { margin-left: auto; display: flex; gap: 18px; font-size: 17px; color: var(--text-muted); }
+.mock__body { padding: 24px 26px 28px; display: grid; gap: 18px; }
+.mock__title { font-size: 34px; }
+.mock__sub { font-size: 19px; color: var(--text-muted); }
+.mock__gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.art {
+  height: 96px;
+  border-radius: var(--radius-md);
+  background: var(--art-bg);
+  position: relative;
+  overflow: hidden;
+}
+.art::before,
+.art::after { content: ""; position: absolute; border-radius: 50%; }
+.art--1::before { width: 70px; height: 70px; left: 18px; top: 14px; background: var(--art-1); }
+.art--1::after  { width: 46px; height: 46px; right: 16px; bottom: 10px; background: var(--art-2); }
+.art--2::before { width: 120px; height: 120px; left: -20px; bottom: -60px; background: var(--art-3); }
+.art--2::after  { width: 40px; height: 40px; right: 22px; top: 16px; background: var(--art-1); }
+.art--3::before { width: 64px; height: 64px; right: 20px; top: 14px; background: var(--art-2); border-radius: var(--radius-sm); }
+.art--3::after  { width: 36px; height: 36px; left: 24px; bottom: 14px; background: var(--art-3); }
+.mock__foot { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.mock__status { font-size: 17px; color: var(--success); }
+.mock .btn { font-size: 19px; padding: 12px 22px; }
+
+.versus { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+.versus__label { font-family: var(--font-mono); font-size: 20px; color: var(--deck-muted); margin-bottom: 12px; }
+.question { font-size: 46px; text-align: center; }
+
+/* --- Slide 3 · Revelación -------------------------------------------------- */
+.zero {
+  font-size: 220px;
+  line-height: 0.9;
+  color: var(--deck-emphasis);
+}
+.filelist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-mono);
+  font-size: 23px;
+  display: grid;
+  gap: 8px;
+}
+.filelist li {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  background: var(--code-bg);
+}
+.filelist .same { color: var(--deck-muted); }
+.filelist .changed { color: var(--warning); font-weight: 700; }
+.filelist .config { color: var(--deck-muted); font-style: italic; }
+
+/* --- Slide 4 · El dolor ---------------------------------------------------- */
+.matrix {
+  height: 300px;
+  border-radius: var(--radius-md);
+  border: var(--border-width) solid var(--border-subtle);
+  /* Cada punto es una rama if que alguien tiene que mantener */
+  background-color: var(--surface-elevated);
+  background-image: radial-gradient(circle, var(--error) 0 5px, transparent 6px);
+  background-size: 34px 34px;
+  background-repeat: space;
+}
+.big-number { font-size: 64px; font-family: var(--font-heading); font-weight: var(--heading-weight); color: var(--error); line-height: 1; }
+
+/* --- Slide 5 / 6 · Tokens -------------------------------------------------- */
+.arrow { font-size: 60px; color: var(--deck-muted); align-self: center; }
+.token-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+.token-list li { display: flex; align-items: center; gap: 18px; font-size: 28px; }
+.chip {
+  flex: none;
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-sm);
+  border: var(--border-width) solid var(--border);
+}
+.tag {
+  font-family: var(--font-mono);
+  font-size: 18px;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  color: var(--deck-muted);
+}
+
+/* --- Slide 7 · Cadena de tres niveles -------------------------------------- */
+.chain { display: grid; gap: 10px; }
+.chain__step {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  align-items: center;
+  gap: 24px;
+}
+.chain__label { font-family: var(--font-mono); font-size: 20px; color: var(--deck-muted); text-align: right; }
+.chain__label b { display: block; color: var(--deck-emphasis); font-size: 24px; }
+.chain__arrow { font-family: var(--font-mono); font-size: 26px; color: var(--deck-muted); padding-left: 316px; line-height: 1; }
+.chain pre.code { padding: 16px 28px; }
+
+/* --- Slide 8 · Familias ---------------------------------------------------- */
+.families { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; }
+.family { padding: 22px 20px; display: flex; flex-direction: column; gap: 14px; }
+.family h3 { font-size: 28px; }
+.family ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.family li { display: grid; grid-template-columns: 44px 1fr; gap: 12px; align-items: center; }
+.family .chip { width: 44px; height: 44px; }
+.family .name { font-family: var(--font-mono); font-size: 17px; line-height: 1.2; text-transform: none; letter-spacing: 0; }
+.family .value { display: block; font-size: 15px; color: var(--deck-muted); }
+.chip--text {
+  display: grid;
+  place-items: center;
+  background: var(--surface);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 22px;
+}
+
+/* --- Slide 9 · Checkpoint -------------------------------------------------- */
+.checkpoint { font-size: 96px; max-width: 1300px; }
+.pill {
+  font-family: var(--font-mono);
+  font-size: 24px;
+  padding: 8px 20px;
+  border: var(--border-width) solid var(--border);
+  border-radius: 999px;
+  color: var(--deck-muted);
+}
+
+/* --- Slide 10 · Mi caso ---------------------------------------------------- */
+.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 18px; counter-reset: paso; }
+.steps li { counter-increment: paso; display: grid; grid-template-columns: 56px 1fr; gap: 18px; align-items: start; font-size: 30px; }
+.steps li::before {
+  content: counter(paso);
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-sm);
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 24px;
+}
+.layers {
+  position: relative;
+  height: 380px;
+  background: var(--surface);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 30px;
+}
+.layers__elevated {
+  position: absolute;
+  inset: 70px 40px 40px 120px;
+  background: var(--surface-elevated);
+  border: var(--border-width) solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  padding: 24px;
+}
+.layers__overlay {
+  position: absolute;
+  right: 30px;
+  bottom: 30px;
+  width: 260px;
+  padding: 18px;
+  background: var(--surface-overlay);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-raised);
+}
+.layers .tag { background: var(--surface); }
+.photo-row { display: flex; gap: 12px; margin-top: 14px; }
+.photo-row .art { width: 110px; height: 80px; }
+
+/* --- Slide 11 · Qué se rompió ---------------------------------------------- */
+.breaks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+.break { display: flex; flex-direction: column; gap: 14px; }
+.break h3 { font-size: 30px; }
+.break p { font-size: 22px; color: var(--deck-muted); line-height: 1.35; }
+.shot { display: grid; gap: 10px; }
+.shot .mock__body { padding: 16px 18px; gap: 10px; }
+.shot__tenant { font-family: var(--font-mono); font-size: 15px; color: var(--text-muted); }
+.shot__card {
+  padding: 14px 16px;
+  font-size: 20px;
+  border-radius: var(--radius-md);
+  border: var(--border-width) solid var(--border-subtle);
+}
+.verdict { font-family: var(--font-mono); font-size: 16px; font-weight: 700; }
+.verdict--ok { color: var(--success); }
+.verdict--bad { color: var(--error); }
+
+/* ❌ ANTIPATRÓN INTENCIONAL (a): hex escrito a mano.
+   Copiado de Casa Aurora (rosa-100, cacao-600, rosa-300). Fíjate cómo
+   NO cambia aunque el envoltorio sea Nocturne. Es el único lugar fuera
+   del bloque de tokens con valores literales, y está aquí para romperse. */
+.antipattern-hardcoded-badge {
+  background: #fbe6ec;
+  color: #7a5a48;
+  border: 1px solid #f2b6c4;
+  border-radius: 18px;
+  padding: 10px 14px;
+  font-size: 18px;
+}
+
+/* ❌ ANTIPATRÓN INTENCIONAL (b): pareja equivocada.
+   Fondo de la familia surface, texto de la familia accent. */
+.antipattern-wrong-pair {
+  background: var(--surface-elevated);
+  color: var(--on-accent);
+}
+
+/* ❌ ANTIPATRÓN INTENCIONAL (c): nombre por valor que miente.
+   Alguien llamó al token por su color… y la marca cambió a cian. */
+.antipattern-lying-name {
+  --pink: var(--neon-cyan-400);
+}
+.antipattern-lying-name .price { color: var(--pink); font-size: 30px; font-weight: 800; }
+
+/* --- Slide 12 · Reglas ----------------------------------------------------- */
+.family-chips { display: flex; flex-wrap: wrap; gap: 14px; }
+.family-chip {
+  font-family: var(--font-mono);
+  font-size: 22px;
+  padding: 10px 18px;
+  border-radius: var(--radius-sm);
+  border: var(--border-width) dashed var(--border);
+  color: var(--deck-muted);
+}
+.family-chip--have {
+  border-style: solid;
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  font-weight: 700;
+}
+.rules { list-style: none; margin: 0; padding: 0; display: grid; gap: 22px; counter-reset: regla; }
+.rules li { counter-increment: regla; padding-left: 70px; position: relative; font-size: 31px; }
+.rules li::before {
+  content: counter(regla);
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-family: var(--font-heading);
+  font-weight: var(--heading-weight);
+  font-size: 46px;
+  line-height: 1;
+  color: var(--deck-emphasis);
+}
+
+/* --- Slide 13 · Tabla de capas --------------------------------------------- */
+.scope {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 30px;
+}
+.scope th,
+.scope td {
+  text-align: left;
+  padding: 18px 26px;
+  border-bottom: var(--border-width) solid var(--table-rule);
+}
+.scope thead th {
+  background: var(--table-head-bg);
+  font-family: var(--font-mono);
+  font-size: 20px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--deck-muted);
+}
+.scope td:last-child { width: 200px; text-align: center; font-weight: 700; }
+.scope .is-done { color: var(--success); }
+.scope .is-partial { color: var(--warning); }
+.scope .is-out { color: var(--deck-muted); }
+.scope tr.is-current td { background: var(--surface-elevated); }
+
+/* --- Slide 14 · Límites ---------------------------------------------------- */
+.limits { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+.limits li {
+  display: grid;
+  grid-template-columns: 1fr 520px;
+  gap: 32px;
+  align-items: center;
+  padding: 16px 24px;
+  border-radius: var(--radius-md);
+  background: var(--surface-elevated);
+  border: var(--border-width) solid var(--border-subtle);
+  font-size: 28px;
+}
+.limits .instead { font-size: 22px; color: var(--deck-muted); font-family: var(--font-mono); }
+.limits .instead::before { content: "→ "; color: var(--deck-emphasis); }
+
+/* --- Slide 16 · Q&A -------------------------------------------------------- */
+.qa h1 { font-size: 150px; }
+.repo { font-family: var(--font-mono); font-size: 34px; color: var(--deck-emphasis); }
+</style>
+</head>
+<body>
+
+<!-- Barra de progreso -->
+<div class="progress" aria-hidden="true"><div class="progress__bar" id="progress-bar"></div></div>
+
+<main class="stage" id="stage" aria-live="polite">
+
+  <!-- =====================================================================
+       1 · PORTADA
+       ===================================================================== -->
+  <section class="slide cover" data-title="Portada">
+    <p class="kicker">Charla técnica · Frontend</p>
+    <h1>Design Tokens y <span class="em">multitenancy visual</span></h1>
+    <blockquote class="thesis">
+      Si el color vive en el componente, no tienes temas.
+      Si vive en un <strong>token con nombre de rol</strong>, tienes multitenancy visual.
+    </blockquote>
+    <p class="hint">→ avanzar · t cambia el tema · n notas · ? ayuda</p>
+    <aside class="notes">
+      Presentarse en 20 s. Leer la tesis en voz alta, despacio: es la frase que quiero que se lleven.
+      Avisar: "estas slides usan exactamente lo que voy a explicar".
+    </aside>
+  </section>
+
+  <!-- =====================================================================
+       2 · GANCHO: dos clientes
+       ===================================================================== -->
+  <section class="slide" data-title="Gancho">
+    <h2>Dos clientes. Dos marcas.</h2>
+    <div class="versus">
+      <div>
+        <p class="versus__label">Cliente A · repostería artesanal</p>
+        <!-- Maqueta con su propio tema: siempre Casa Aurora -->
+        <div class="mock" data-theme="aurora">
+          <div class="mock__bar"><i></i><i></i><i></i></div>
+          <div class="mock__header">
+            <div class="mock__logo"></div>
+            <span class="mock__brand">Casa Aurora</span>
+            <nav class="mock__nav"><span>Tartas</span><span>Pedidos</span><span>Contacto</span></nav>
+          </div>
+          <div class="mock__body">
+            <h3 class="mock__title">Tartas de temporada</h3>
+            <p class="mock__sub">Horneadas cada mañana con fruta local.</p>
+            <div class="mock__gallery">
+              <div class="art art--1"></div><div class="art art--2"></div><div class="art art--3"></div>
+            </div>
+            <div class="mock__foot">
+              <span class="mock__status">✓ Pedido confirmado</span>
+              <span class="btn">Reservar pedido</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <p class="versus__label">Cliente B · club de música en vivo</p>
+        <!-- Maqueta con su propio tema: siempre Nocturne -->
+        <div class="mock" data-theme="nocturne">
+          <div class="mock__bar"><i></i><i></i><i></i></div>
+          <div class="mock__header">
+            <div class="mock__logo"></div>
+            <span class="mock__brand">Nocturne</span>
+            <nav class="mock__nav"><span>Agenda</span><span>Entradas</span><span>Contacto</span></nav>
+          </div>
+          <div class="mock__body">
+            <h3 class="mock__title">Esta noche en vivo</h3>
+            <p class="mock__sub">Puertas a las 22:00. Aforo limitado.</p>
+            <div class="mock__gallery">
+              <div class="art art--1"></div><div class="art art--2"></div><div class="art art--3"></div>
+            </div>
+            <div class="mock__foot">
+              <span class="mock__status">✓ Entrada reservada</span>
+              <span class="btn">Comprar entradas</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="question heading">¿Cuánto código diferente hay entre ellos?</p>
+    <aside class="notes">
+      Dejar que miren 5 s. Preguntar en voz alta y esperar respuestas: "¿el 50 %? ¿dos proyectos?".
+      No responder todavía.
+    </aside>
+  </section>
+
+  <!-- =====================================================================
+       3 · REVELACIÓN: cero
+       ===================================================================== -->
+  <section class="slide" data-title="Revelación">
+    <div class="row" style="align-items: center; gap: 70px;">
+      <div class="col" style="flex: 0 0 470px;">
+        <p class="zero heading">Cero.</p>
+        <p class="lead">Mismo árbol de componentes. Mismo JSX. Solo cambia el archivo de tema.</p>
+      </div>
+      <div class="col grow">
+        <ul class="filelist" aria-label="Diferencias entre clientes">
+          <li><span>components/Header.jsx</span><span class="same">= idéntico</span></li>
+          <li><span>components/Gallery.jsx</span><span class="same">= idéntico</span></li>
+          <li><span>components/DetailCard.jsx</span><span class="same">= idéntico</span></li>
+          <li><span>components/ContactForm.jsx</span><span class="same">= idéntico</span></li>
+          <li><span>components/Button.jsx</span><span class="same">= idéntico</span></li>
+          <li><span>themes/themes.json</span><span class="changed">± distinto</span></li>
+          <li><span>content/tenants.js</span><span class="config">textos (configuración)</span></li>
+        </ul>
+<pre class="code sm"><span class="c">// themes.json · semantic.accent</span>
+<span class="del">- "accent": "{rosa-300}",</span>
+<span class="add">+ "accent": "{neon-magenta-400}",</span>
+<span class="del">- "heading-transform": "none",</span>
+<span class="add">+ "heading-transform": "uppercase",</span></pre>
+      </div>
+    </div>
+    <aside class="notes">
+      Cero líneas de componente. Lo que cambia es un JSON. Los textos sí difieren, pero eso es configuración, no código.
+      Si hay tiempo, mostrar la demo con el switcher.
+    </aside>
+  </section>
+
+  <!-- =====================================================================
+       4 · EL DOLOR
+       ===================================================================== -->
+  <section class="slide" data-title="El dolor">
+    <h2>Lo que solemos hacer</h2>
+    <div class="row">
+<pre class="code sm grow" style="align-self: flex-start;"><span class="k">function</span> ButtonWithIfs({ tenant }) {
+  <span class="k">if</span> (tenant === <span class="s">'aurora'</span>) {
+    background = <span class="s">'#f2b6c4'</span>;
+    borderRadius = <span class="s">'28px'</span>;
+  } <span class="k">else if</span> (tenant === <span class="s">'nocturne'</span>) {
+    background = <span class="s">'#ff2bd6'</span>;
+    borderRadius = <span class="s">'0px'</span>;
+  } <span class="k">else</span> {
+    <span class="c">// ¿Cliente 12? Nadie se acordó de este archivo</span>
+    background = <span class="s">'#cccccc'</span>;
+  }
+  <span class="c">// …y lo mismo en Card, Input, Badge, Header…</span>
+}</pre>
+      <div class="col" style="flex: 0 0 470px;">
+        <h3 class="em" style="font-size: 52px;">¿Y el cliente 12?</h3>
+        <div class="matrix" role="img" aria-label="Rejilla de ramas if: componentes por clientes"></div>
+        <div><p class="big-number">480 ramas if</p><p class="muted small">40 componentes × 12 clientes</p></div>
+      </div>
+    </div>
+    <aside class="notes">
+      Esto es demo/src/antipattern/ButtonWithIfs.jsx. Con dos clientes "funciona".
+      El problema es multiplicativo: cada componente conoce a cada cliente.
+    </aside>
+  </section>
+
+  <!-- =====================================================================
+       5 · QUÉ SON LOS TOKENS
+       ===================================================================== -->
+  <section class="slide" data-title="Qué son los tokens">
+    <p class="kicker">¿Qué son los design tokens?</p>
+    <h2>Decisiones de diseño <span class="em">como datos.</span></h2>
+    <div class="row" style="align-items: center;">
+      <div class="grow">
+        <p class="code-title">themes.json</p>
+<pre class="code">{
+  <span class="s">"accent"</span>:       <span class="s">"#f2b6c4"</span>,
+  <span class="s">"radius-lg"</span>:    <span class="s">"28px"</span>,
+  <span class="s">"font-heading"</span>: <span class="s">"Georgia, serif"</span>
+}</pre>
+      </div>
+      <span class="arrow" aria-hidden="true">→</span>
+      <div class="grow">
+        <p class="code-title">variables CSS</p>
+<pre class="code"><span class="k">:root</span> {
+  --accent: <span class="n">#f2b6c4</span>;
+  --radius-lg: <span class="n">28px</span>;
+  --font-heading: Georgia, serif;
+}</pre>
+      </div>
+    </div>
+    <p class="muted">Un nombre y un valor. Viven fuera del componente: se versionan, se revisan y cambian por tenant.</p>
+    <aside class="notes">
+      Color, tipografía, radios, sombras, espaciado: todo lo que un diseñador decide puede ser un token.
+      La clave no es el formato, es que la decisión sale del componente.
+    </aside>
+  </section>
+
+  <!-- =====================================================================
+       6 · DOS FORMAS DE NOMBRAR
+       ===================================================================== -->
+  <section class="slide" data-title="Dos formas de nombrar">
+    <h2>Dos formas de nombrar</h2>
+    <div class="grid-2">
+      <div class="card col">
+        <p class="kicker">Primitivos · por valor</p>
+        <h3>Dicen <span class="em">qué es</span></h3>
+        <ul class="token-list">
+          <li><span class="chip" style="background: var(--rosa-300);"></span><code>--rosa-300</code></li>
+          <li><span class="chip" style="background: var(--neon-magenta-400);"></span><code>--neon-magenta-400</code></li>
+          <li><span class="chip" style="background: var(--cacao-900);"></span><code>--cacao-900</code></li>
+        </ul>
+      </div>
+      <div class="card col">
+        <p class="kicker">Semánticos · por rol</p>
+        <h3>Dicen <span class="em">para qué sirve</span></h3>
+        <ul class="token-list">
+          <li><span class="chip" style="background: var(--accent);"></span><code>--accent</code></li>
+          <li><span class="chip" style="background: var(--surface);"></span><code>--surface</code></li>
+          <li><span class="chip" style="background: var(--on-surface);"></span><code>--on-surface</code></li>
+        </ul>
+      </div>
+    </div>
+    <p class="muted center">Pulsa <kbd>t</kbd>: los de la izquierda no cambian; los de la derecha, sí.</p>
+    <aside class="notes">
+      Cambiar el tema en vivo con "t". Los primitivos son fijos; los roles apuntan a otro primitivo.
+      Los dos son necesarios: los primitivos son la paleta, los roles son el contrato.
+    </aside>
+  </section>
+
+  <!-- =====================================================================
+       7 · POR QUÉ IMPORTA EL NOMBRE: la cadena de tres niveles
+       ===================================================================== -->
+  <section class="slide" data-title="Por qué importa el nombre">
+    <h2>El componente no sabe de colores, <span class="em">sabe de roles.</span></h2>
+    <div class="row" style="align-items: center; gap: 56px;">
+      <div class="chain grow">
+        <div class="chain__step">
+          <p class="chain__label"><b>Componente</b>CSS</p>
+<pre class="code"><span class="k">.btn</span> { background: var(--btn-bg); }</pre>
+        </div>
+        <span class="chain__arrow" aria-hidden="true">↓</span>
+        <div class="chain__step">
+          <p class="chain__label"><b>Nivel 3</b>componente</p>
+<pre class="code">--btn-bg: var(--accent);</pre>
+        </div>
+        <span class="chain__arrow" aria-hidden="true">↓</span>
+        <div class="chain__step">
+          <p class="chain__label"><b>Nivel 2</b>semántico</p>
+<pre class="code">--accent: <span class="only-aurora">var(--rosa-300);</span><span class="only-nocturne">var(--neon-magenta-400);</span></pre>
+        </div>
+        <span class="chain__arrow" aria-hidden="true">↓</span>
+        <div class="chain__step">
+          <p class="chain__label"><b>Nivel 1</b>primitivo</p>
+<pre class="code"><span class="only-aurora">--rosa-300: <span class="n">#f2b6c4</span>;</span><span class="only-nocturne">--neon-magenta-400: <span class="n">#ff2bd6</span>;</span></pre>
+        </div>
+      </div>
+      <div class="col center" style="flex: 0 0 300px;">
+        <span class="btn">Reservar</span>
+        <p class="small muted">Botón real del deck. Pulsa <kbd>t</kbd>.</p>
+      </div>
+    </div>
+    <aside class="notes">
+      Leer de arriba a abajo. Al cambiar de tema, solo cambian las dos últimas líneas: el componente y su token no se tocan.
+    </aside>
+  </section>
+
+  <!-- =====================================================================
+       8 · FAMILIAS DE ROLES (muestras en vivo con el tema actual)
+       ===================================================================== -->
+  <section class="slide" data-title="Familias de roles">
+    <h2>Familias de roles</h2>
+    <div class="families">
+      <div class="card family">
+        <h3>Superficies</h3>
+        <ul>
+          <li><span class="chip" style="background: var(--surface);"></span><span class="name">surface<span class="value" data-readout="surface"></span></span></li>
+          <li><span class="chip" style="background: var(--surface-elevated);"></span><span class="name">surface-elevated<span class="value" data-readout="surface-elevated"></span></span></li>
+          <li><span class="chip" style="background: var(--surface-overlay);"></span><span class="name">surface-overlay<span class="value" data-readout="surface-overlay"></span></span></li>
+        </ul>
+      </div>
+      <div class="card family">
+        <h3>Contenido</h3>
+        <ul>
+          <li><span class="chip chip--text" style="color: var(--on-surface);">Aa</span><span class="name">on-surface<span class="value" data-readout="on-surface"></span></span></li>
+          <li><span class="chip chip--text" style="color: var(--text-muted);">Aa</span><span class="name">text-muted<span class="value" data-readout="text-muted"></span></span></li>
+        </ul>
+      </div>
+      <div class="card family">
+        <h3>Acento</h3>
+        <ul>
+          <li><span class="chip" style="background: var(--accent);"></span><span class="name">accent<span class="value" data-readout="accent"></span></span></li>
+          <li><span class="chip chip--text" style="background: var(--accent); color: var(--on-accent);">Aa</span><span class="name">on-accent<span class="value" data-readout="on-accent"></span></span></li>
+        </ul>
+      </div>
+      <div class="card family">
+        <h3>Bordes</h3>
+        <ul>
+          <li><span class="chip" style="background: var(--surface); border-color: var(--border); border-width: 4px;"></span><span class="name">border<span class="value" data-readout="border"></span></span></li>
+          <li><span class="chip" style="background: var(--surface); border-color: var(--border-subtle); border-width: 4px;"></span><span class="name">border-subtle<span class="value" data-readout="border-subtle"></span></span></li>
+        </ul>
+      </div>
+      <div class="card family">
+        <h3>Estados</h3>
+        <ul>
+          <li><span class="chip" style="background: var(--success);"></span><span class="name">success<span class="value" data-readout="success"></span></span></li>
+          <li><span class="chip" style="background: var(--error);"></span><span class="name">error<span class="value" data-readout="error"></span></span></li>
+          <li><span class="chip" style="background: var(--warning);"></span><span class="name">warning<span class="value" data-readout="warning"></span></span></li>
+          <li><span class="chip" style="background: var(--focus);"></span><span class="name">focus<span class="value" data-readout="focus"></span></span></li>
+        </ul>
+      </div>
+    </div>
+    <p class="muted small">Y también son roles: tipografía, forma (radios, grosor de borde), espaciado y elevación.</p>
+    <aside class="notes">
+      Los valores bajo cada nombre se leen en vivo con getComputedStyle. Pulsar "t" para que vean cómo cambian.
+      Insistir en que "contenido" y "acento" van en pareja con su superficie.
+    </aside>
+  </section>
+
+  <!-- =====================================================================
+       9 · CHECKPOINT
+       ===================================================================== -->
+  <section class="slide center" data-title="Checkpoint">
+    <p class="checkpoint heading">¿Alguien ya tiene algo así en su proyecto?</p>
+    <span class="pill">30 s · manos arriba</span>
+    <aside class="notes">
+      Contar manos. Preguntar a una persona qué nombres usa. Sirve para calibrar el resto de la charla.
+    </aside>
+  </section>
+
+  <!-- =====================================================================
+       10 · MI CASO: empecé por las superficies
+       ===================================================================== -->
+  <section class="slide" data-title="Mi caso">
+    <p class="kicker">Mi caso</p>
+    <h2>Empecé por las <span class="em">superficies</span></h2>
+    <div class="row" style="gap: 56px; align-items: center;">
+      <div class="col grow">
+        <p class="lead" style="font-size: 32px;">Un sistema de galerías de fotos y photobooth para eventos. Cada evento quería su propio look.</p>
+        <ol class="steps">
+          <li><span>Los fondos cambiaban por evento: los nombré por necesidad.</span></li>
+          <li><span><code>surface</code>, <code>surface-elevated</code>… y funcionó.</span></li>
+          <li><span>No sabía que era una familia de tokens semánticos.</span></li>
+        </ol>
+      </div>
+      <div class="layers" style="flex: 0 0 600px;" aria-label="Capas de superficie en una galería">
+        <span class="tag">surface</span>
+        <div class="layers__elevated">
+          <span class="tag">surface-elevated</span>
+          <div class="photo-row">
+            <div class="art art--1"></div><div class="art art--2"></div><div class="art art--3"></div>
+          </div>
+        </div>
+        <div class="layers__overlay"><span class="tag">surface-overlay</span></div>
+      </div>
+    </div>
+    <aside class="notes">
+      Contar la historia real sin nombres de marca. Lo importante: llegué a los roles por necesidad, no por teoría.
+    </aside>
+  </section>
+
+  <!-- =====================================================================
+       11 · QUÉ SE ROMPIÓ (capturas recreadas con CSS)
+       ===================================================================== -->
+  <section class="slide" data-title="Qué se rompió">
+    <h2>Qué se rompió</h2>
+    <div class="breaks">
+
+      <!-- (a) Hex escrito a mano -->
+      <div class="break">
+        <div class="shot">
+          <div class="mock" data-theme="aurora">
+            <div class="mock__body">
+              <span class="shot__tenant">Casa Aurora</span>
+              <div class="antipattern-hardcoded-badge">2×1 en tartas este finde</div>
+              <span class="verdict verdict--ok">✓ se ve bien</span>
+            </div>
+          </div>
+          <div class="mock" data-theme="nocturne">
+            <div class="mock__body">
+              <span class="shot__tenant">Nocturne</span>
+              <div class="antipattern-hardcoded-badge">2×1 en entradas este finde</div>
+              <span class="verdict verdict--bad">✗ sigue rosa pastel</span>
+            </div>
+          </div>
+        </div>
+        <h3>a · Hex hardcodeado</h3>
+        <p>Un literal no participa del tema: se queda con el color del otro tenant.</p>
+      </div>
+
+      <!-- (b) Superficie sin su pareja on-surface -->
+      <div class="break">
+        <div class="shot">
+          <div class="mock" data-theme="aurora">
+            <div class="mock__body">
+              <span class="shot__tenant">Casa Aurora</span>
+              <div class="shot__card antipattern-wrong-pair">Detalle del pedido · 12 porciones</div>
+              <span class="verdict verdict--ok">✓ se lee (por casualidad)</span>
+            </div>
+          </div>
+          <div class="mock" data-theme="nocturne">
+            <div class="mock__body">
+              <span class="shot__tenant">Nocturne</span>
+              <div class="shot__card antipattern-wrong-pair">Detalle de la entrada · fila 12</div>
+              <span class="verdict verdict--bad">✗ texto oscuro sobre oscuro</span>
+            </div>
+          </div>
+        </div>
+        <h3>b · Pareja equivocada</h3>
+        <p><code>surface-elevated</code> con <code>on-accent</code>: en el tema oscuro el texto desaparece.</p>
+      </div>
+
+      <!-- (c) Nombre por valor que miente -->
+      <div class="break">
+        <div class="shot">
+          <div class="mock antipattern-lying-name" data-theme="nocturne">
+            <div class="mock__body">
+              <span class="shot__tenant">Tras el rediseño</span>
+<pre class="code sm" style="font-size: 17px; padding: 12px 16px;"><span class="k">.price</span> { color: var(--pink); }</pre>
+              <span class="price">35 € · precio</span>
+              <span class="verdict verdict--bad">✗ «--pink» ahora es cian</span>
+            </div>
+          </div>
+        </div>
+        <h3>c · Nombres que mienten</h3>
+        <p>Si el nombre describe el valor, el día que cambia el valor el nombre miente.</p>
+      </div>
+
+    </div>
+    <aside class="notes">
+      Los tres errores están en la demo (HardcodedBadge, WrongPairCard). El (b) es el más traicionero: en el tema claro no se nota.
+      Estas "capturas" son CSS con los mismos tokens; el (a) es el único lugar con hex a propósito.
+    </aside>
+  </section>
+
+  <!-- =====================================================================
+       12 · POR ESO LLEGUÉ A LOS ROLES
+       ===================================================================== -->
+  <section class="slide" data-title="Por eso llegué a los roles">
+    <h2>Por eso llegué a los <span class="em">roles</span></h2>
+    <div class="grid-2" style="align-items: center;">
+      <div class="col">
+        <p class="lead" style="font-size: 32px;">Las superficies eran solo una familia. Faltaban las demás.</p>
+        <div class="family-chips">
+          <span class="family-chip family-chip--have">superficies ✓</span>
+          <span class="family-chip">contenido</span>
+          <span class="family-chip">acento</span>
+          <span class="family-chip">bordes</span>
+          <span class="family-chip">estados</span>
+          <span class="family-chip">tipografía</span>
+          <span class="family-chip">forma</span>
+        </div>
+      </div>
+      <ol class="rules">
+        <li>Toda superficie viaja con su <code>on-surface</code>.</li>
+        <li>Los componentes consumen <span class="em">roles</span>: nunca primitivos ni hex.</li>
+        <li>Los primitivos solo existen dentro del archivo de tema.</li>
+      </ol>
+    </div>
+    <aside class="notes">
+      Cerrar el arco personal: lo que nombré por intuición era la mitad de un sistema. Las tres reglas son las que hoy reviso en code review.
+    </aside>
+  </section>
+
+  <!-- =====================================================================
+       13 · CAPAS DE UN SISTEMA MULTITENANT (alcance honesto)
+       ===================================================================== -->
+  <section class="slide" data-title="Capas de un sistema multitenant">
+    <h2>Capas de un sistema multitenant</h2>
+    <table class="scope">
+      <thead>
+        <tr><th scope="col">Capa</th><th scope="col">Estado</th></tr>
+      </thead>
+      <tbody>
+        <tr class="is-current"><td>Identidad visual por tenant (tokens)</td><td class="is-done">✅</td></tr>
+        <tr><td>Configuración y contenido por tenant</td><td class="is-partial">parcial</td></tr>
+        <tr><td>Resolución de tenant (subdominio / path / header)</td><td class="is-out">—</td></tr>
+        <tr><td>Aislamiento de datos (<code>tenant_id</code>, schema, BD)</td><td class="is-out">—</td></tr>
+      </tbody>
+    </table>
+    <p class="lead" style="font-size: 34px;">Diseñamos la capa de theming pensando en multitenancy.</p>
+    <aside class="notes">
+      Ser explícito: esto NO es multitenancy completo. Resolver el tenant y aislar datos son otras charlas.
+      Lo que sí defiendo: la capa visual no debería ser la que bloquee al cliente 12.
+    </aside>
+  </section>
+
+  <!-- =====================================================================
+       14 · LÍMITES
+       ===================================================================== -->
+  <section class="slide" data-title="Límites">
+    <h2>Cuándo un tema ya no alcanza</h2>
+    <ul class="limits">
+      <li><span>Estructura o layout distinto por tenant</span><span class="instead">variantes de layout / composición</span></li>
+      <li><span>Componentes o flujos diferentes</span><span class="instead">configuración por tenant</span></li>
+      <li><span>Contenido y funcionalidades</span><span class="instead">config y feature flags, no tokens</span></li>
+      <li><span>Activos de marca: logos, fuentes, imágenes</span><span class="instead">assets por tenant</span></li>
+      <li><span>Accesibilidad garantizada en todos los temas</span><span class="instead">validar contraste por tema</span></li>
+    </ul>
+    <aside class="notes">
+      Los tokens resuelven el "cómo se ve", no el "qué hace". Si un tenant necesita otro flujo, eso es configuración o feature flags.
+      Accesibilidad: cada tema nuevo es una combinación nueva de contrastes que hay que comprobar.
+    </aside>
+  </section>
+
+  <!-- =====================================================================
+       15 · CIERRE
+       ===================================================================== -->
+  <section class="slide" data-title="Cierre">
+    <blockquote class="thesis" style="font-size: 50px;">
+      Si el color vive en el componente, no tienes temas.
+      Si vive en un <strong>token con nombre de rol</strong>, tienes multitenancy visual.
+    </blockquote>
+    <p class="heading" style="font-size: 46px;">¿Cuántos hex hardcodeados hay hoy en tu proyecto?</p>
+<pre class="code sm" style="align-self: flex-start;"><span class="c"># un punto de partida, no una métrica</span>
+grep -rnE <span class="s">"#[0-9a-fA-F]{3,8}\b"</span> src/ | wc -l</pre>
+    <aside class="notes">
+      Repetir la tesis. Dejar la pregunta en el aire unos segundos; invitar a correr el grep el lunes.
+    </aside>
+  </section>
+
+  <!-- =====================================================================
+       16 · PREGUNTAS
+       ===================================================================== -->
+  <section class="slide center qa" data-title="Preguntas">
+    <h1>Preguntas</h1>
+    <!-- TODO: reemplazar con la URL real del repo -->
+    <p class="repo">github.com/&lt;usuario&gt;/expo-design-tokens</p>
+<pre class="code"><span class="c"># correr la demo</span>
+cd demo &amp;&amp; npm install &amp;&amp; npm run dev</pre>
+    <aside class="notes">
+      Abrir la demo si alguien pregunta por el editor de tokens en vivo.
+      Respuestas honestas a lo que queda fuera: ver el banco de preguntas en guia/guia-presentador.md.
+    </aside>
+  </section>
+
+</main>
+
+<!-- Pie: tema y contador -->
+<footer class="chrome">
+  <span>Design Tokens · multitenancy visual</span>
+  <div class="chrome__right">
+    <button type="button" id="theme-toggle" title="Cambiar tema (t)">
+      <span class="swatch-dot" aria-hidden="true"></span><span id="theme-label">Nocturne</span>
+    </button>
+    <span id="counter" aria-live="polite">1 / 16</span>
+  </div>
+</footer>
+
+<!-- Overlay de notas del presentador (tecla n) -->
+<div class="overlay overlay--notes" id="notes-overlay" hidden tabindex="-1">
+  <h4 id="notes-title">Notas</h4>
+  <div id="notes-body"></div>
+</div>
+
+<!-- Overlay de ayuda (tecla ?) -->
+<div class="overlay overlay--help" id="help-overlay" hidden tabindex="-1" role="dialog" aria-label="Atajos de teclado">
+  <h4>Atajos de teclado</h4>
+  <dl>
+    <dt><kbd>→</kbd> <kbd>Espacio</kbd> <kbd>AvPág</kbd></dt><dd>Siguiente</dd>
+    <dt><kbd>←</kbd> <kbd>⇧ Espacio</kbd> <kbd>RePág</kbd></dt><dd>Anterior</dd>
+    <dt><kbd>Inicio</kbd> <kbd>Fin</kbd></dt><dd>Primera / última</dd>
+    <dt><kbd>t</kbd></dt><dd>Cambiar tema (Nocturne ↔ Casa Aurora)</dd>
+    <dt><kbd>n</kbd></dt><dd>Notas del presentador</dd>
+    <dt><kbd>f</kbd></dt><dd>Pantalla completa</dd>
+    <dt><kbd>?</kbd> <kbd>Esc</kbd></dt><dd>Mostrar / cerrar esta ayuda</dd>
+  </dl>
+</div>
+
+<script>
+/*
+ * Navegación del deck, cambio de tema y overlays.
+ * Sin dependencias: se abre con doble clic en el archivo.
+ */
+(function () {
+  'use strict';
+
+  var root = document.documentElement;
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var progressBar = document.getElementById('progress-bar');
+  var counter = document.getElementById('counter');
+  var themeToggle = document.getElementById('theme-toggle');
+  var themeLabel = document.getElementById('theme-label');
+  var notesOverlay = document.getElementById('notes-overlay');
+  var notesTitle = document.getElementById('notes-title');
+  var notesBody = document.getElementById('notes-body');
+  var helpOverlay = document.getElementById('help-overlay');
+
+  // Los temas disponibles. Añadir uno = añadir su bloque semántico en el CSS.
+  var THEMES = [
+    { id: 'nocturne', label: 'Nocturne' },
+    { id: 'aurora', label: 'Casa Aurora' }
+  ];
+  var THEME_STORAGE_KEY = 'expo-design-tokens:theme';
+  var DESIGN_WIDTH = 1600;
+  var DESIGN_HEIGHT = 900;
+
+  var current = 0;
+
+  // --- Escala del escenario 16:9 -------------------------------------------
+  function fitStage() {
+    var scale = Math.min(window.innerWidth / DESIGN_WIDTH, window.innerHeight / DESIGN_HEIGHT);
+    root.style.setProperty('--stage-scale', String(scale));
+  }
+
+  // --- Navegación -----------------------------------------------------------
+  function clampIndex(index) {
+    return Math.max(0, Math.min(slides.length - 1, index));
+  }
+
+  function indexFromHash() {
+    var n = parseInt(window.location.hash.replace('#', ''), 10);
+    return Number.isFinite(n) ? clampIndex(n - 1) : 0;
+  }
+
+  function writeHash(index) {
+    var hash = '#' + (index + 1);
+    if (window.location.hash === hash) return;
+    try {
+      history.replaceState(null, '', hash);
+    } catch (error) {
+      // Algunos navegadores bloquean replaceState en file://
+      window.location.hash = hash;
+    }
+  }
+
+  function goTo(index) {
+    current = clampIndex(index);
+
+    slides.forEach(function (slide, i) {
+      var active = i === current;
+      slide.classList.toggle('is-active', active);
+      slide.classList.toggle('is-past', i < current);
+      slide.setAttribute('aria-hidden', active ? 'false' : 'true');
+      slide.inert = !active;
+    });
+
+    counter.textContent = (current + 1) + ' / ' + slides.length;
+    progressBar.style.width = ((current + 1) / slides.length) * 100 + '%';
+    document.title = slides[current].dataset.title + ' · Design Tokens';
+    writeHash(current);
+    renderNotes();
+  }
+
+  function next() { goTo(current + 1); }
+  function previous() { goTo(current - 1); }
+
+  // --- Tema -----------------------------------------------------------------
+  // Prioridad: ?theme=aurora en la URL, luego la última elección guardada.
+  function readStoredTheme() {
+    var fromUrl = new URLSearchParams(window.location.search).get('theme');
+    if (fromUrl) return fromUrl;
+    try { return localStorage.getItem(THEME_STORAGE_KEY); } catch (error) { return null; }
+  }
+
+  function setTheme(themeId) {
+    var theme = THEMES.filter(function (t) { return t.id === themeId; })[0] || THEMES[0];
+    root.dataset.theme = theme.id;
+    themeLabel.textContent = theme.label;
+    try { localStorage.setItem(THEME_STORAGE_KEY, theme.id); } catch (error) { /* sin almacenamiento */ }
+    updateTokenReadouts();
+  }
+
+  function toggleTheme() {
+    var index = THEMES.map(function (t) { return t.id; }).indexOf(root.dataset.theme);
+    setTheme(THEMES[(index + 1) % THEMES.length].id);
+  }
+
+  // Slide 8: muestra el valor resuelto de cada rol en el tema activo.
+  function updateTokenReadouts() {
+    var styles = getComputedStyle(root);
+    document.querySelectorAll('[data-readout]').forEach(function (element) {
+      var value = styles.getPropertyValue('--' + element.dataset.readout).trim();
+      element.textContent = value.toLowerCase();
+    });
+  }
+
+  // --- Overlays ---------------------------------------------------------------
+  function renderNotes() {
+    var notes = slides[current].querySelector('.notes');
+    notesTitle.textContent = 'Notas · ' + (current + 1) + ' · ' + slides[current].dataset.title;
+    notesBody.textContent = notes ? notes.textContent.trim().replace(/\s+/g, ' ') : 'Sin notas.';
+  }
+
+  function toggleOverlay(overlay) {
+    overlay.hidden = !overlay.hidden;
+  }
+
+  function toggleFullscreen() {
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    } else if (root.requestFullscreen) {
+      root.requestFullscreen().catch(function () { /* el navegador lo rechazó */ });
+    }
+  }
+
+  // --- Teclado ----------------------------------------------------------------
+  document.addEventListener('keydown', function (event) {
+    if (event.ctrlKey || event.metaKey || event.altKey) return;
+    // No robar teclas al botón de tema cuando tiene el foco (Enter/Espacio)
+    if (event.target === themeToggle && (event.key === 'Enter' || event.key === ' ')) return;
+
+    switch (event.key) {
+      case 'ArrowRight':
+      case 'PageDown':
+        next();
+        break;
+      case ' ':
+        if (event.shiftKey) { previous(); } else { next(); }
+        break;
+      case 'ArrowLeft':
+      case 'PageUp':
+        previous();
+        break;
+      case 'Home':
+        goTo(0);
+        break;
+      case 'End':
+        goTo(slides.length - 1);
+        break;
+      case 't':
+      case 'T':
+        toggleTheme();
+        break;
+      case 'n':
+      case 'N':
+        toggleOverlay(notesOverlay);
+        break;
+      case 'f':
+      case 'F':
+        toggleFullscreen();
+        break;
+      case '?':
+        toggleOverlay(helpOverlay);
+        break;
+      case 'Escape':
+        helpOverlay.hidden = true;
+        notesOverlay.hidden = true;
+        break;
+      default:
+        return;
+    }
+    event.preventDefault();
+  });
+
+  // --- Gestos táctiles (deslizar) --------------------------------------------
+  var touchStartX = null;
+  document.addEventListener('touchstart', function (event) {
+    touchStartX = event.changedTouches[0].clientX;
+  }, { passive: true });
+  document.addEventListener('touchend', function (event) {
+    if (touchStartX === null) return;
+    var deltaX = event.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(deltaX) > 50) { if (deltaX < 0) { next(); } else { previous(); } }
+    touchStartX = null;
+  }, { passive: true });
+
+  // --- Arranque ---------------------------------------------------------------
+  themeToggle.addEventListener('click', toggleTheme);
+  window.addEventListener('resize', fitStage);
+  window.addEventListener('hashchange', function () { goTo(indexFromHash()); });
+
+  fitStage();
+  setTheme(readStoredTheme() || 'nocturne');
+  goTo(indexFromHash());
+  requestAnimationFrame(function () {
+    requestAnimationFrame(function () { root.classList.add('is-ready'); });
+  });
+})();
+</script>
+</body>
+</html>
