@@ -1,0 +1,215 @@
+{
+  "$description": "Único lugar del proyecto donde viven los colores. Cada tenant es un tema con tres niveles: primitives -> semantic -> component. Los componentes solo leen semantic y component, nunca primitives.",
+
+  "aurora": {
+    "$description": "Casa Aurora: estudio de pastelería artesanal. Claro, cálido, pastel, serif y radios suaves.",
+
+    "primitives": {
+      "_comment": "Nivel 1 · Primitivos. La paleta cruda del tenant: valores literales con nombre de material (rosa, cacao, crema). No dicen para qué sirven, solo qué son. Ningún componente los usa directamente.",
+
+      "crema-50": "#fdf8f2",
+      "crema-100": "#f7eee3",
+      "blanco-0": "#fffdfa",
+      "rosa-100": "#fbe6ec",
+      "rosa-300": "#f2b6c4",
+      "rosa-600": "#c45a74",
+      "cacao-200": "#e8dacc",
+      "cacao-400": "#a6876f",
+      "cacao-600": "#7a5a48",
+      "cacao-900": "#3a2419",
+      "salvia-400": "#9db592",
+      "salvia-700": "#4e6b4b",
+      "frambuesa-700": "#b23a48",
+      "miel-300": "#f3d9a4",
+      "miel-700": "#8a5a12",
+
+      "font-serif": "\"Iowan Old Style\", \"Palatino Linotype\", Palatino, \"Book Antiqua\", Georgia, serif",
+
+      "radius-soft-sm": "10px",
+      "radius-soft-md": "18px",
+      "radius-soft-lg": "28px",
+
+      "shadow-soft": "0 22px 44px -26px rgba(58, 36, 25, 0.38)",
+      "shadow-softer": "0 8px 20px -12px rgba(58, 36, 25, 0.30)"
+    },
+
+    "semantic": {
+      "_comment": "Nivel 2 · Semánticos. Nombres de ROL agrupados por familia. Responden a '¿para qué sirve?' y apuntan a un primitivo con {referencia}. Este es el contrato que leen los componentes: igual en todos los tenants, distinto valor en cada uno.",
+
+      "surfaces": {
+        "surface": "{crema-50}",
+        "surface-elevated": "{blanco-0}",
+        "surface-overlay": "{crema-100}"
+      },
+      "content": {
+        "on-surface": "{cacao-900}",
+        "text-muted": "{cacao-600}"
+      },
+      "accent": {
+        "accent": "{rosa-300}",
+        "on-accent": "{cacao-900}"
+      },
+      "borders": {
+        "border": "{cacao-400}",
+        "border-subtle": "{cacao-200}"
+      },
+      "states": {
+        "success": "{salvia-700}",
+        "error": "{frambuesa-700}",
+        "warning": "{miel-700}",
+        "focus": "{rosa-600}"
+      },
+      "illustration": {
+        "art-bg": "{rosa-100}",
+        "art-1": "{rosa-300}",
+        "art-2": "{salvia-400}",
+        "art-3": "{miel-300}"
+      },
+      "typography": {
+        "font-body": "{font-serif}",
+        "font-heading": "{font-serif}",
+        "heading-weight": "500",
+        "heading-style": "italic",
+        "heading-transform": "none",
+        "heading-tracking": "-0.01em"
+      },
+      "shape": {
+        "radius-sm": "{radius-soft-sm}",
+        "radius-md": "{radius-soft-md}",
+        "radius-lg": "{radius-soft-lg}",
+        "border-width": "1px"
+      },
+      "spacing": {
+        "space-section": "88px",
+        "space-card": "28px"
+      },
+      "elevation": {
+        "shadow-card": "{shadow-soft}",
+        "shadow-raised": "{shadow-softer}"
+      }
+    },
+
+    "component": {
+      "_comment": "Nivel 3 · Componentes (opcional). Decisiones de un componente concreto, siempre apuntando a un semántico. Si cambias 'accent', 'btn-bg' cambia solo.",
+
+      "btn-bg": "{accent}",
+      "btn-fg": "{on-accent}",
+      "btn-radius": "{radius-lg}",
+      "btn-secondary-fg": "{on-surface}",
+      "btn-secondary-border": "{border}",
+      "card-bg": "{surface-elevated}",
+      "card-fg": "{on-surface}",
+      "card-border": "{border-subtle}",
+      "card-radius": "{radius-lg}",
+      "card-shadow": "{shadow-card}",
+      "input-bg": "{surface}",
+      "input-border": "{border}",
+      "input-radius": "{radius-md}",
+      "logo-radius": "{radius-lg}"
+    }
+  },
+
+  "nocturne": {
+    "$description": "Nocturne: club de música en vivo. Oscuro, neón, alto contraste, sans condensada en mayúsculas, esquinas rectas y brillo.",
+
+    "primitives": {
+      "_comment": "Nivel 1 · Primitivos. La paleta cruda del tenant: noche, humo y neones. No dicen para qué sirven, solo qué son. Ningún componente los usa directamente.",
+
+      "noche-950": "#07060d",
+      "noche-900": "#100e1b",
+      "noche-800": "#1a1730",
+      "noche-700": "#2a2648",
+      "violeta-400": "#6e68b0",
+      "humo-50": "#f5f2ff",
+      "humo-400": "#a7a3c4",
+      "neon-magenta-400": "#ff2bd6",
+      "neon-cyan-400": "#22e4ff",
+      "neon-lima-400": "#b6ff3b",
+      "neon-rojo-400": "#ff4d6d",
+      "neon-ambar-400": "#ffc53d",
+
+      "font-condensed": "\"Avenir Next Condensed\", \"Arial Narrow\", \"Roboto Condensed\", \"Helvetica Neue\", system-ui, sans-serif",
+
+      "radius-none": "0px",
+      "radius-hair": "2px",
+
+      "glow-magenta": "0 0 0 1px rgba(255, 43, 214, 0.55), 0 0 32px -4px rgba(255, 43, 214, 0.45)",
+      "glow-cyan": "0 0 0 1px rgba(34, 228, 255, 0.55), 0 0 22px -4px rgba(34, 228, 255, 0.45)"
+    },
+
+    "semantic": {
+      "_comment": "Nivel 2 · Semánticos. Los MISMOS nombres de rol que Casa Aurora, con otros valores. Por eso el mismo componente se ve completamente distinto.",
+
+      "surfaces": {
+        "surface": "{noche-950}",
+        "surface-elevated": "{noche-900}",
+        "surface-overlay": "{noche-800}"
+      },
+      "content": {
+        "on-surface": "{humo-50}",
+        "text-muted": "{humo-400}"
+      },
+      "accent": {
+        "accent": "{neon-magenta-400}",
+        "on-accent": "{noche-950}"
+      },
+      "borders": {
+        "border": "{violeta-400}",
+        "border-subtle": "{noche-700}"
+      },
+      "states": {
+        "success": "{neon-lima-400}",
+        "error": "{neon-rojo-400}",
+        "warning": "{neon-ambar-400}",
+        "focus": "{neon-cyan-400}"
+      },
+      "illustration": {
+        "art-bg": "{noche-800}",
+        "art-1": "{neon-magenta-400}",
+        "art-2": "{neon-cyan-400}",
+        "art-3": "{neon-lima-400}"
+      },
+      "typography": {
+        "font-body": "{font-condensed}",
+        "font-heading": "{font-condensed}",
+        "heading-weight": "800",
+        "heading-style": "normal",
+        "heading-transform": "uppercase",
+        "heading-tracking": "0.08em"
+      },
+      "shape": {
+        "radius-sm": "{radius-none}",
+        "radius-md": "{radius-hair}",
+        "radius-lg": "{radius-hair}",
+        "border-width": "2px"
+      },
+      "spacing": {
+        "space-section": "56px",
+        "space-card": "20px"
+      },
+      "elevation": {
+        "shadow-card": "{glow-magenta}",
+        "shadow-raised": "{glow-cyan}"
+      }
+    },
+
+    "component": {
+      "_comment": "Nivel 3 · Componentes (opcional). Mismas claves que Casa Aurora. El botón no sabe qué tenant está activo: solo lee 'btn-bg'.",
+
+      "btn-bg": "{accent}",
+      "btn-fg": "{on-accent}",
+      "btn-radius": "{radius-sm}",
+      "btn-secondary-fg": "{on-surface}",
+      "btn-secondary-border": "{border}",
+      "card-bg": "{surface-elevated}",
+      "card-fg": "{on-surface}",
+      "card-border": "{border}",
+      "card-radius": "{radius-lg}",
+      "card-shadow": "{shadow-card}",
+      "input-bg": "{surface}",
+      "input-border": "{border}",
+      "input-radius": "{radius-sm}",
+      "logo-radius": "{radius-sm}"
+    }
+  }
+}

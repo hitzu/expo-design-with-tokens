@@ -1,0 +1,108 @@
+/*
+ * base.css · Estilos del documento del tenant.
+ *
+ * Regla de oro: aquí solo se leen tokens semánticos o de componente
+ * (var(--surface), var(--on-surface), var(--font-body)…).
+ * Ni primitivos (var(--rosa-300)) ni colores literales (#f2b6c4).
+ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--surface);
+  color: var(--on-surface);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  transition:
+    background-color 0.35s ease,
+    color 0.35s ease;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  color: inherit;
+  font-family: var(--font-heading);
+  font-weight: var(--heading-weight);
+  font-style: var(--heading-style);
+  text-transform: var(--heading-transform);
+  letter-spacing: var(--heading-tracking);
+  line-height: 1.1;
+}
+
+h1 {
+  font-size: clamp(2.4rem, 1.6rem + 3vw, 4.25rem);
+}
+
+h2 {
+  font-size: clamp(1.6rem, 1.3rem + 1.2vw, 2.4rem);
+}
+
+h3 {
+  font-size: 1.3rem;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+/* Anillo de foco único para toda la página del tenant: siempre --focus. */
+:where(.tenant-page) :focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
+/* ---------- Estructura de la app (sin colores) ---------- */
+
+.app-shell {
+  min-height: 100vh;
+}
+
+.app-shell--panel-open {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 380px;
+}
+
+.tenant-page {
+  container: tenant-page / inline-size;
+  min-width: 0;
+  padding: 0 clamp(20px, 4vw, 64px) 48px;
+}
+
+@media (max-width: 960px) {
+  .app-shell--panel-open {
+    display: block;
+    /* Deja espacio para el cajón inferior del panel. */
+    padding-bottom: 62vh;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+  }
+}

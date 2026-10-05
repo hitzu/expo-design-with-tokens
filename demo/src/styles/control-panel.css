@@ -1,0 +1,388 @@
+/*
+ * control-panel.css · Panel de la charla y marcos de las demos.
+ *
+ * Este archivo está FUERA del sistema de temas a propósito.
+ * El panel no pertenece a ningún tenant: es la herramienta del presentador.
+ * Tiene que leerse igual en Casa Aurora, en Nocturne y también cuando
+ * rompemos los tokens en vivo desde el editor. Si leyera var(--surface),
+ * un token roto dejaría el panel inutilizable justo en mitad de la demo.
+ *
+ * Por eso aquí, y solo aquí, hay colores literales y una fuente fija:
+ * una paleta gris neutra que no compite con ningún tenant.
+ */
+
+.control-panel,
+.teaching__label,
+.teaching__caption,
+.verdict,
+.teaching__toggle,
+.cp-reopen {
+  font-family:
+    ui-sans-serif,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
+  font-style: normal;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+/* ---------- Panel lateral ---------- */
+
+.control-panel {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 20px;
+  background: #f4f4f5;
+  color: #18181b;
+  border-left: 1px solid #d4d4d8;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.control-panel :focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+.cp-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.cp-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.cp-hint {
+  margin: 0;
+  color: #52525b;
+  font-size: 12.5px;
+}
+
+.cp-section {
+  padding: 16px 0;
+  border-top: 1px solid #d4d4d8;
+}
+
+.cp-section__title {
+  margin: 0 0 10px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  font-style: normal;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #3f3f46;
+}
+
+.cp-button {
+  padding: 6px 12px;
+  border: 1px solid #a1a1aa;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #18181b;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.cp-button:hover {
+  background: #e4e4e7;
+}
+
+.cp-input {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid #a1a1aa;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #18181b;
+  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 12.5px;
+}
+
+/* Selector de tenant segmentado */
+.cp-segmented {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 4px;
+  gap: 4px;
+  border-radius: 10px;
+  background: #e4e4e7;
+}
+
+.cp-segmented__option {
+  padding: 10px 8px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: #3f3f46;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.cp-segmented__option[aria-checked='true'] {
+  background: #18181b;
+  color: #ffffff;
+}
+
+.cp-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
+  cursor: pointer;
+}
+
+.cp-checkbox input {
+  width: 18px;
+  height: 18px;
+  accent-color: #18181b;
+}
+
+/* Editor de tokens */
+.cp-editor__toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.cp-family {
+  margin: 10px 0 0;
+  padding: 8px 10px 10px;
+  border: 1px solid #d4d4d8;
+  border-radius: 8px;
+  background: #fafafa;
+}
+
+.cp-family legend {
+  padding: 0 4px;
+  font-weight: 700;
+  font-size: 12.5px;
+  color: #3f3f46;
+}
+
+.cp-token {
+  display: grid;
+  gap: 3px;
+  padding: 5px 0;
+}
+
+.cp-token__name {
+  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+.cp-token__inputs {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.cp-token__swatch {
+  width: 34px;
+  height: 30px;
+  flex: none;
+  padding: 0;
+  border: 1px solid #a1a1aa;
+  border-radius: 6px;
+  background: #ffffff;
+  cursor: pointer;
+}
+
+.cp-token__resolved {
+  color: #71717a;
+  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 11.5px;
+  overflow-wrap: anywhere;
+}
+
+.cp-json {
+  margin-top: 12px;
+}
+
+.cp-json summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.cp-json__textarea {
+  min-height: 280px;
+  margin-top: 8px;
+  resize: vertical;
+}
+
+.cp-json__textarea[aria-invalid='true'] {
+  border-color: #dc2626;
+}
+
+.cp-json__status {
+  margin: 4px 0 0;
+  color: #15803d;
+  font-size: 12px;
+}
+
+.cp-json__status--invalid {
+  color: #b91c1c;
+}
+
+.cp-reopen {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 20;
+  padding: 10px 16px;
+  border: 1px solid #3f3f46;
+  border-radius: 999px;
+  background: #18181b;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* En pantallas estrechas el panel pasa a ser un cajón inferior. */
+@media (max-width: 960px) {
+  .control-panel {
+    position: fixed;
+    inset: auto 0 0 0;
+    z-index: 20;
+    height: 60vh;
+    border-left: 0;
+    border-top: 1px solid #a1a1aa;
+    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.25);
+  }
+}
+
+/* ---------- Marcos de las demos didácticas ----------
+ * La etiqueta "Demo N" y el pie son neutros para leerse en proyector.
+ * El escenario (.teaching__stage) NO tiene estilos de color: hereda el tenant.
+ */
+
+.teaching {
+  margin: 24px 0;
+  border: 2px dashed #71717a;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.teaching__label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  background: #18181b;
+  color: #ffffff;
+}
+
+.teaching__label h2 {
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 700;
+  font-style: normal;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+.teaching__number {
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: #fde047;
+  color: #18181b;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.teaching__stage {
+  display: grid;
+  gap: 16px;
+  padding: 24px 16px;
+}
+
+.teaching__caption {
+  margin: 0;
+  padding: 12px 16px;
+  background: #f4f4f5;
+  color: #27272a;
+  border-top: 1px solid #d4d4d8;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.teaching__toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  justify-self: start;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: #f4f4f5;
+  color: #18181b;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.comparison-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.comparison {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+
+.verdict {
+  justify-self: start;
+  margin: 0;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.verdict--wrong {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.verdict--right {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.comparison__body {
+  display: grid;
+  justify-items: start;
+}
+
+.comparison__body > * {
+  width: 100%;
+}
+
+.comparison__body > button {
+  width: auto;
+}
