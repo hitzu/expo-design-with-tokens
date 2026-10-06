@@ -3,7 +3,8 @@
  *
  * Separado a propósito de themes.json: el tema decide CÓMO se ve,
  * este archivo decide QUÉ dice. Aquí no hay ni un solo color.
- * Ambos tenants son ficticios.
+ * Ambos tenants son ficticios y del MISMO negocio (panadería y pastelería),
+ * con las mismas secciones: lo único que cambia entre ellos es el tema.
  */
 export const tenantContent = {
   aurora: {
@@ -57,54 +58,54 @@ export const tenantContent = {
     footer: 'Casa Aurora · estudio de pastelería ficticio creado para esta demo',
   },
 
-  nocturne: {
+  molino: {
     brand: {
-      name: 'Nocturne',
-      tagline: 'Club de música en vivo · hasta que salga el sol',
-      monogram: 'N',
+      name: 'Molino Central',
+      tagline: 'Panificadora industrial · pan para tiendas y restaurantes',
+      monogram: 'M',
     },
-    nav: ['Agenda', 'Artistas', 'Reservas', 'Contacto'],
+    nav: ['Catálogo', 'Rutas', 'Pedidos', 'Contacto'],
     hero: {
-      eyebrow: 'Esta semana en vivo',
-      title: 'El volumen empieza cuando se apagan las luces',
-      text: 'Tres salas, sonido de estudio y una cabina que no descansa. Jazz eléctrico, techno en vivo y sesiones que terminan con el amanecer.',
-      primary: 'Comprar entradas',
-      secondary: 'Ver agenda',
+      eyebrow: 'Producción de esta semana',
+      title: 'Pan fresco a escala, todos los días',
+      text: 'Hornos de túnel, masa madre estandarizada y reparto antes de las 6:00. Abastecemos a tiendas, cafeterías y restaurantes con la misma calidad en cada lote.',
+      primary: 'Pedir una cotización',
+      secondary: 'Ver el catálogo',
     },
     gallery: {
-      title: 'Próximas noches',
+      title: 'Productos de la semana',
       items: [
-        { title: 'Ultravioleta Trío', meta: 'Vie 23:00 · Sala A', tag: 'Jazz eléctrico' },
-        { title: 'Pulso Norte · live set', meta: 'Sáb 01:30 · Sala B', tag: 'Techno' },
-        { title: 'Sesión de amanecer', meta: 'Dom 05:00 · Terraza', tag: 'Ambient' },
+        { title: 'Pan de caja integral', meta: '$1.200 · lote de 100', tag: 'Nuevo' },
+        { title: 'Bollos para hamburguesa', meta: '$900 · lote de 240', tag: 'Más pedido' },
+        { title: 'Croissant de mantequilla', meta: '$1.450 · lote de 120', tag: 'Mañanas' },
       ],
     },
     detail: {
-      eyebrow: 'Noche destacada',
-      title: 'Neón en la sala grande',
-      text: 'Cuatro horas de sintetizadores analógicos, visuales en directo y un sistema de sonido afinado para que lo sientas en el pecho.',
+      eyebrow: 'Producto destacado',
+      title: 'Baguette precocida',
+      text: 'Fermentación lenta de 18 horas, horneado al 80 % y ultracongelado. Tu cocina la termina en 8 minutos y sale como recién hecha.',
       facts: [
-        ['Puertas', '22:00'],
-        ['Aforo', '480 personas'],
-        ['Edad', '+18'],
+        ['Presentación', 'Caja de 50'],
+        ['Alérgenos', 'Gluten'],
+        ['Pedido', '24 h de anticipación'],
       ],
-      primary: 'Reservar mesa',
-      secondary: 'Añadir al calendario',
+      primary: 'Pedir',
+      secondary: 'Guardar',
     },
     contact: {
-      title: 'Lista de invitados',
-      text: 'Reservas de grupo, prensa o booking de artistas.',
-      namePlaceholder: 'Mateo Ríos',
-      emailPlaceholder: 'mateo@correo.com',
-      messagePlaceholder: 'Somos 8 para el viernes…',
-      submit: 'Enviar solicitud',
+      title: 'Haz tu pedido',
+      text: 'Pedidos recurrentes para tu tienda o restaurante, cotizaciones por volumen o visitas a la planta.',
+      namePlaceholder: 'Restaurante La Esquina',
+      emailPlaceholder: 'compras@laesquina.com',
+      messagePlaceholder: 'Necesitamos 300 bollos diarios desde el lunes…',
+      submit: 'Enviar pedido',
       statesTitle: 'Estados del sistema',
     },
     states: {
-      success: 'Estás en la lista. Muestra tu correo en la puerta.',
-      error: 'Algo falló al enviar. Revisa el correo e inténtalo otra vez.',
-      warning: 'Quedan menos de 20 entradas para el viernes.',
+      success: 'Recibimos tu pedido. Te confirmamos la ruta de entrega en menos de 24 h.',
+      error: 'No pudimos enviar el pedido. Revisa el correo e inténtalo de nuevo.',
+      warning: 'Los pedidos para el reparto del lunes cierran hoy a las 18:00.',
     },
-    footer: 'Nocturne · club ficticio creado para esta demo',
+    footer: 'Molino Central · panificadora ficticia creada para esta demo',
   },
 };

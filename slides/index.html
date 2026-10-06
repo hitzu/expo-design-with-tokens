@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es" data-theme="nocturne">
+<html lang="es" data-theme="molino">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,13 +12,14 @@
   Todo el color, la tipografía y la forma de este deck sale del bloque de
   tokens de abajo. Tres niveles, igual que demo/src/themes/themes.json:
 
-    1. Primitivos   → la paleta cruda (--rosa-300, --neon-magenta-400…)
+    1. Primitivos   → la paleta cruda (--rosa-300, --amarillo-400…)
     2. Semánticos   → roles por familia (--surface, --on-surface, --accent…)
     3. Componentes  → decisiones de un componente (--btn-bg, --code-bg…)
 
   Cambiar de tema = cambiar el atributo data-theme del <html> (tecla «t»).
   Fuera del bloque de tokens no hay ni un solo hex… salvo en el antipatrón
-  de la diapositiva 11, que está ahí a propósito.
+  de la diapositiva 11 (y los datos ilustrativos de la 14), que están ahí
+  a propósito.
   ===========================================================================
 -->
 <style>
@@ -52,28 +53,40 @@
   --shadow-soft: 0 22px 44px -26px rgba(58, 36, 25, 0.38);
   --shadow-softer: 0 8px 20px -12px rgba(58, 36, 25, 0.30);
 
-  /* — Nocturne: noche, humo y neones — */
-  --noche-950: #07060d;
-  --noche-900: #100e1b;
-  --noche-800: #1a1730;
-  --noche-700: #2a2648;
-  --violeta-400: #6e68b0;
-  --humo-50: #f5f2ff;
-  --humo-400: #a7a3c4;
-  --neon-magenta-400: #ff2bd6;
-  --neon-cyan-400: #22e4ff;
-  --neon-lima-400: #b6ff3b;
-  --neon-rojo-400: #ff4d6d;
-  --neon-ambar-400: #ffc53d;
-  --font-condensed: "Avenir Next Condensed", "Arial Narrow", "Roboto Condensed", "Helvetica Neue", system-ui, sans-serif;
+  /* — Molino Central: grafito, acero, harina y amarillo de seguridad — */
+  --grafito-950: #121417;
+  --grafito-900: #1b1f24;
+  --grafito-800: #262b32;
+  --acero-800: #2b3642;
+  --acero-700: #3a4a5c;
+  --acero-400: #7d93ab;
+  --acero-200: #aeb9c6;
+  --harina-50: #f4f1ea;
+  --harina-300: #d9cfbd;
+  --amarillo-400: #ffc20e;
+  --verde-400: #4cc38a;
+  --rojo-400: #ff6b5b;
+  --naranja-400: #ff9f1c;
+  --azul-300: #6cb6ff;
+  --font-industrial: "Helvetica Neue", Arial, system-ui, sans-serif;
   --radius-none: 0px;
   --radius-hair: 2px;
-  --glow-magenta: 0 0 0 1px rgba(255, 43, 214, 0.55), 0 0 32px -4px rgba(255, 43, 214, 0.45);
-  --glow-cyan: 0 0 0 1px rgba(34, 228, 255, 0.55), 0 0 22px -4px rgba(34, 228, 255, 0.45);
+  --sombra-ninguna: none;
 
   /* — Compartidos por el deck (no son de ningún tenant) — */
   --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
   --font-system: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  /* — Contenido de la slide 13 (foto de ejemplo y redes sociales).
+       NO son tema: una foto o el ícono de una red no cambian con el tenant. — */
+  --foto-gris-100: #ebe7e1;
+  --foto-gris-200: #d9d3cb;
+  --foto-gris-300: #c4bcb1;
+  --foto-gris-400: #a8a094;
+  --foto-gris-600: #6f685f;
+  --foto-blanco: #faf8f5;
+  --red-gris-600: #5f6368;
+  --red-blanco: #ffffff;
 }
 
 /* ==========================================================================
@@ -122,45 +135,45 @@
   --shadow-raised: var(--shadow-softer);
 }
 
-[data-theme="nocturne"] {
+[data-theme="molino"] {
   /* Superficies */
-  --surface: var(--noche-950);
-  --surface-elevated: var(--noche-900);
-  --surface-overlay: var(--noche-800);
+  --surface: var(--grafito-950);
+  --surface-elevated: var(--grafito-900);
+  --surface-overlay: var(--grafito-800);
   /* Contenido */
-  --on-surface: var(--humo-50);
-  --text-muted: var(--humo-400);
+  --on-surface: var(--harina-50);
+  --text-muted: var(--acero-200);
   /* Acento */
-  --accent: var(--neon-magenta-400);
-  --on-accent: var(--noche-950);
+  --accent: var(--amarillo-400);
+  --on-accent: var(--grafito-950);
   /* Bordes */
-  --border: var(--violeta-400);
-  --border-subtle: var(--noche-700);
+  --border: var(--acero-400);
+  --border-subtle: var(--acero-700);
   /* Estados */
-  --success: var(--neon-lima-400);
-  --error: var(--neon-rojo-400);
-  --warning: var(--neon-ambar-400);
-  --focus: var(--neon-cyan-400);
+  --success: var(--verde-400);
+  --error: var(--rojo-400);
+  --warning: var(--naranja-400);
+  --focus: var(--azul-300);
   /* Ilustración */
-  --art-bg: var(--noche-800);
-  --art-1: var(--neon-magenta-400);
-  --art-2: var(--neon-cyan-400);
-  --art-3: var(--neon-lima-400);
+  --art-bg: var(--acero-800);
+  --art-1: var(--amarillo-400);
+  --art-2: var(--acero-400);
+  --art-3: var(--harina-300);
   /* Tipografía */
-  --font-body: var(--font-condensed);
-  --font-heading: var(--font-condensed);
+  --font-body: var(--font-industrial);
+  --font-heading: var(--font-industrial);
   --heading-weight: 800;
   --heading-style: normal;
   --heading-transform: uppercase;
-  --heading-tracking: 0.08em;
+  --heading-tracking: 0.04em;
   /* Forma */
   --radius-sm: var(--radius-none);
   --radius-md: var(--radius-hair);
   --radius-lg: var(--radius-hair);
   --border-width: 2px;
   /* Elevación */
-  --shadow-card: var(--glow-magenta);
-  --shadow-raised: var(--glow-cyan);
+  --shadow-card: var(--sombra-ninguna);
+  --shadow-raised: var(--sombra-ninguna);
 }
 
 /* ==========================================================================
@@ -206,9 +219,27 @@
   --code-add: var(--success);
   --code-remove: var(--error);
 
-  /* Tabla */
-  --table-head-bg: var(--surface-overlay);
-  --table-rule: var(--border-subtle);
+  /* Galería (slide 13) */
+  --device-frame: var(--on-surface);
+  --pill-bg: var(--surface-overlay);
+  --pill-fg: var(--on-surface);
+  --btn-share-bg: linear-gradient(135deg, var(--accent), var(--art-3));
+  --btn-share-fg: var(--on-accent);
+  --marker-bg: var(--on-surface);
+  --marker-fg: var(--surface);
+
+  /* Contenido que NO sigue al tema (foto y redes): apunta a primitivos
+     compartidos a propósito, porque no es una decisión del tenant. */
+  --photo-bg: var(--foto-gris-100);
+  --photo-floor: var(--foto-gris-300);
+  --photo-arch: var(--foto-gris-200);
+  --photo-balloon-1: var(--foto-gris-400);
+  --photo-balloon-2: var(--foto-blanco);
+  --photo-balloon-3: var(--foto-gris-300);
+  --photo-logo-bg: var(--foto-blanco);
+  --photo-logo-fg: var(--foto-gris-600);
+  --social-bg: var(--red-gris-600);
+  --social-fg: var(--red-blanco);
 }
 
 /* Mismas claves de componente, distinta decisión por tema
@@ -217,8 +248,8 @@
   --deck-emphasis: var(--focus);   /* el rosa pastel no se lee como texto */
   --logo-radius: var(--radius-lg);
 }
-[data-theme="nocturne"] {
-  --deck-emphasis: var(--accent);  /* el neón sí se lee sobre la noche */
+[data-theme="molino"] {
+  --deck-emphasis: var(--accent);  /* el amarillo de seguridad sí se lee sobre grafito */
   --card-border: var(--border);
   --btn-radius: var(--radius-sm);
   --logo-radius: var(--radius-sm);
@@ -370,9 +401,6 @@ pre.code.sm { font-size: 21px; padding: 20px 26px; }
   margin-bottom: 10px;
 }
 
-/* Fragmentos que dependen del tema activo del deck (slide 7) */
-html[data-theme="aurora"] .only-nocturne,
-html[data-theme="nocturne"] .only-aurora { display: none; }
 
 /* --- Utilidades de layout -------------------------------------------------- */
 .row { display: flex; gap: 40px; align-items: stretch; }
@@ -433,8 +461,11 @@ html.is-ready .progress__bar { transition: width 0.35s ease; }
   font-family: var(--font-mono);
   font-size: 14px;
   color: var(--deck-muted);
+  opacity: 0.6;
   z-index: 10;
 }
+.chrome:hover,
+.chrome:focus-within { opacity: 1; }
 .chrome__right { display: flex; align-items: center; gap: 14px; }
 .chrome button {
   font: inherit;
@@ -516,7 +547,6 @@ kbd {
 
 /* --- Slide 1 · Portada ----------------------------------------------------- */
 .cover h1 { max-width: 1300px; }
-.cover .hint { font-size: 22px; color: var(--deck-muted); font-family: var(--font-mono); }
 
 /* --- Slides 2 y 11 · Maquetas de página ------------------------------------
    Cada maqueta lleva su propio data-theme: los tokens de componente se
@@ -636,6 +666,17 @@ kbd {
   border-radius: var(--radius-sm);
   border: var(--border-width) solid var(--border);
 }
+.chip--text {
+  display: grid;
+  place-items: center;
+  background: var(--surface);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 22px;
+}
+.token-list--defined li { align-items: flex-start; }
+.token-list--defined code { font-size: 28px; }
+.definition { display: block; margin-top: 4px; font-size: 21px; line-height: 1.3; color: var(--deck-muted); }
 .tag {
   font-family: var(--font-mono);
   font-size: 18px;
@@ -645,47 +686,184 @@ kbd {
   color: var(--deck-muted);
 }
 
-/* --- Slide 7 · Cadena de tres niveles -------------------------------------- */
-.chain { display: grid; gap: 10px; }
-.chain__step {
-  display: grid;
-  grid-template-columns: 260px 1fr;
-  align-items: center;
-  gap: 24px;
+/* --- Slide 7 · Por qué importa el nombre ---------------------------------
+   Primero la analogía; abajo el código en dos zonas: lo que NO cambia
+   (el componente) y lo que SÍ cambia (cada tema). */
+.slide--roles { gap: 28px; }
+.slide--roles h2 { font-size: 52px; }
+.roles-grid { display: grid; grid-template-columns: minmax(0, 1fr) 850px; gap: 44px; align-items: center; }
+.analogy { font-size: 30px; line-height: 1.35; }
+.analogy-punch {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 34px;
+  line-height: 1.2;
+  color: var(--deck-emphasis);
 }
-.chain__label { font-family: var(--font-mono); font-size: 20px; color: var(--deck-muted); text-align: right; }
-.chain__label b { display: block; color: var(--deck-emphasis); font-size: 24px; }
-.chain__arrow { font-family: var(--font-mono); font-size: 26px; color: var(--deck-muted); padding-left: 316px; line-height: 1; }
-.chain pre.code { padding: 16px 28px; }
+.asks { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.ask {
+  display: grid;
+  gap: 6px;
+  align-content: start;
+  padding: 16px 18px;
+  background: var(--card-bg);
+  color: var(--card-fg);
+  border: var(--border-width) solid var(--card-border);
+  border-radius: var(--radius-md);
+}
+.ask__title { font-family: var(--font-mono); font-size: 18px; font-weight: 700; }
+.ask--bad .ask__title { color: var(--error); }
+.ask--good .ask__title { color: var(--success); }
+.ask__quote { font-size: 24px; }
+.ask__result { font-size: 19px; line-height: 1.3; color: var(--deck-muted); }
+.zones { display: grid; gap: 10px; }
+.zone {
+  display: grid;
+  gap: 12px;
+  padding: 16px 20px 20px;
+  border: var(--border-width) solid var(--border-subtle);
+  border-radius: var(--radius-md);
+}
+.zone--theme { border-style: dashed; border-color: var(--border); }
+.zone__label { font-family: var(--font-mono); font-size: 18px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--deck-muted); }
+.zone__row { display: flex; align-items: center; gap: 24px; }
+.zone__row pre.code { flex: 1; font-size: 22px; padding: 16px 22px; }
+.zone__demo { display: grid; justify-items: center; gap: 6px; }
+.btn--accent { background: var(--accent); color: var(--on-accent); }
+.zone-divider { display: flex; align-items: center; gap: 16px; font-family: var(--font-mono); font-size: 20px; color: var(--deck-emphasis); }
+.zone-divider::before,
+.zone-divider::after { content: ""; flex: 1; border-top: calc(var(--border-width) * 2) dashed var(--deck-emphasis); }
+.tenant-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.tenant-col {
+  display: grid;
+  gap: 8px;
+  padding: 6px;
+  border: calc(var(--border-width) * 2) solid transparent;
+  border-radius: var(--radius-md);
+}
+.tenant-col__name { font-family: var(--font-mono); font-size: 17px; color: var(--deck-muted); }
+.tenant-col pre.code { font-size: 18px; padding: 12px 14px; }
+/* Se resalta la columna del tema activo del deck */
+html[data-theme="aurora"] .tenant-col--aurora,
+html[data-theme="molino"] .tenant-col--molino { border-color: var(--deck-emphasis); }
+html[data-theme="aurora"] .tenant-col--aurora .tenant-col__name::after,
+html[data-theme="molino"] .tenant-col--molino .tenant-col__name::after { content: " · tema activo"; color: var(--deck-emphasis); }
 
-/* --- Slide 8 · Familias ---------------------------------------------------- */
-.families { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; }
-.family { padding: 22px 20px; display: flex; flex-direction: column; gap: 14px; }
-.family h3 { font-size: 28px; }
-.family ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
-.family li { display: grid; grid-template-columns: 44px 1fr; gap: 12px; align-items: center; }
-.family .chip { width: 44px; height: 44px; }
-.family .name { font-family: var(--font-mono); font-size: 17px; line-height: 1.2; text-transform: none; letter-spacing: 0; }
-.family .value { display: block; font-size: 15px; color: var(--deck-muted); }
-.chip--text {
+/* --- Slide 8 · Familias de roles ------------------------------------------
+   Cada fila: qué significa la familia, sus tokens con muestras en vivo y un
+   ejemplo de interfaz pintado solo con esos tokens. */
+.slide--families { padding: 40px 70px 76px; gap: 16px; }
+.fam-head { display: flex; align-items: baseline; justify-content: space-between; gap: 32px; }
+.fam-head h2 { font-size: 54px; }
+.fam-head p { font-size: 20px; max-width: 680px; text-align: right; }
+.fam-list { display: grid; gap: 12px; }
+.fam {
+  display: grid;
+  grid-template-columns: 320px minmax(0, 1fr) 410px;
+  gap: 26px;
+  align-items: center;
+  padding: 12px 22px;
+}
+.fam__intro h3 { font-size: 27px; }
+.fam__meaning { font-size: 19px; line-height: 1.25; margin-top: 4px; }
+.fam__where { font-family: var(--font-mono); font-size: 14px; line-height: 1.25; color: var(--deck-muted); margin-top: 4px; }
+.fam__tokens { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.fam__tokens li { display: grid; gap: 5px; min-width: 0; }
+.swatch {
+  height: 38px;
+  border-radius: var(--radius-sm);
+  border: var(--border-width) solid var(--border);
+}
+.swatch--text {
   display: grid;
   place-items: center;
   background: var(--surface);
   font-family: var(--font-body);
   font-weight: 700;
-  font-size: 22px;
+  font-size: 20px;
+}
+.swatch--border { background: var(--surface); border-width: 4px; }
+.fam__tokens .name { font-family: var(--font-mono); font-size: 15px; line-height: 1.2; overflow-wrap: anywhere; text-transform: none; letter-spacing: 0; }
+.fam__tokens .value { display: block; font-size: 13px; color: var(--deck-muted); }
+.fam__example {
+  position: relative;
+  height: 88px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  overflow: hidden;
+  background: var(--surface);
+  color: var(--on-surface);
+  border: var(--border-width) solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  font-size: 16px;
+  line-height: 1.2;
+}
+.ex-label { font-family: var(--font-mono); font-size: 13px; color: var(--text-muted); }
+.ex-surfaces { display: block; }
+.ex-card {
+  position: absolute;
+  left: 92px;
+  top: 12px;
+  bottom: 12px;
+  width: 170px;
+  padding: 6px 10px;
+  background: var(--surface-elevated);
+  border: var(--border-width) solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-card);
+}
+.ex-menu {
+  position: absolute;
+  right: 16px;
+  top: 24px;
+  width: 104px;
+  height: 50px;
+  padding: 6px 10px;
+  background: var(--surface-overlay);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-raised);
+}
+.ex-title { font-family: var(--font-heading); font-weight: var(--heading-weight); font-style: var(--heading-style); text-transform: var(--heading-transform); letter-spacing: var(--heading-tracking); font-size: 23px; }
+.ex-sub { margin-top: 4px; font-size: 16px; color: var(--text-muted); }
+.ex-btn { font-size: 15px; padding: 10px 14px; white-space: nowrap; }
+.ex-tabs { display: flex; margin-left: auto; border: var(--border-width) solid var(--border-subtle); border-radius: var(--radius-sm); overflow: hidden; }
+.ex-tabs span { padding: 6px 10px; font-size: 14px; color: var(--text-muted); }
+.ex-tabs .is-active { background: var(--accent); color: var(--on-accent); font-weight: 700; }
+.ex-field {
+  flex: 1;
+  padding: 9px 12px;
+  background: var(--surface);
+  color: var(--text-muted);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-sm);
+}
+.ex-rows { display: grid; width: 130px; font-size: 15px; }
+.ex-rows span { padding: 4px 2px; border-bottom: var(--border-width) solid var(--border-subtle); }
+.ex-state {
+  padding: 5px 8px;
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+  color: var(--state);
+  border: var(--border-width) solid var(--state);
+  border-radius: var(--radius-sm);
+}
+.ex-focus {
+  margin-left: 6px;
+  padding: 5px 10px;
+  font-size: 14px;
+  background: var(--surface-elevated);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-sm);
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
 }
 
 /* --- Slide 9 · Checkpoint -------------------------------------------------- */
-.checkpoint { font-size: 96px; max-width: 1300px; }
-.pill {
-  font-family: var(--font-mono);
-  font-size: 24px;
-  padding: 8px 20px;
-  border: var(--border-width) solid var(--border);
-  border-radius: 999px;
-  color: var(--deck-muted);
-}
+.checkpoint { font-size: 80px; max-width: 1360px; }
 
 /* --- Slide 10 · Mi caso ---------------------------------------------------- */
 .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 18px; counter-reset: paso; }
@@ -735,8 +913,148 @@ kbd {
 .photo-row { display: flex; gap: 12px; margin-top: 14px; }
 .photo-row .art { width: 110px; height: 80px; }
 
+/* --- Slide 13 · Galería en producción ----------------------------------------------
+   La interfaz del teléfono solo lee tokens semánticos y de componente:
+   al pulsar «t» se re-tematiza. La foto y las redes leen --photo-* y
+   --social-*, que no dependen del tema. */
+.slide--gallery { flex-direction: row; align-items: center; justify-content: flex-start; gap: 64px; padding: 34px 100px 66px; }
+.phone {
+  position: relative;
+  flex: 0 0 376px;
+  height: 790px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--surface);
+  color: var(--on-surface);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.25;
+  border: 10px solid var(--device-frame);
+  border-radius: 48px;
+}
+.gal-photo { position: relative; flex: 0 0 370px; overflow: hidden; }
+.gal-photo__img { display: block; width: 100%; height: 100%; }
+.gal-top { position: absolute; top: 16px; left: 14px; right: 14px; display: flex; justify-content: space-between; align-items: center; }
+.gal-pill {
+  position: relative;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 700;
+  background: var(--pill-bg);
+  color: var(--pill-fg);
+  border-radius: var(--radius-lg);
+}
+.gal-lang { display: flex; padding: 3px; background: var(--pill-bg); color: var(--pill-fg); border-radius: var(--radius-lg); font-size: 13px; font-weight: 700; }
+.gal-lang span { padding: 3px 9px; border-radius: var(--radius-lg); }
+.gal-lang .is-active { background: var(--accent); color: var(--on-accent); }
+.gal-arrow {
+  position: absolute;
+  top: 50%;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  margin-top: -20px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--on-accent);
+  font: 700 26px/1 var(--font-system);
+}
+.gal-arrow--prev { left: 12px; }
+.gal-arrow--next { right: 12px; }
+.gal-count { position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%); }
+.gal-gift {
+  position: absolute;
+  right: 14px;
+  bottom: 12px;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--pill-bg);
+  color: var(--pill-fg);
+}
+.gal-body { position: relative; flex: 1; display: grid; align-content: start; gap: 12px; padding: 14px; }
+.gal-cta {
+  position: relative;
+  display: grid;
+  gap: 8px;
+  padding: 14px;
+  background: var(--surface-elevated);
+  border: var(--border-width) solid var(--border-subtle);
+  border-radius: var(--radius-md);
+}
+.gal-cta h3 { font-size: 21px; line-height: 1.15; color: var(--on-surface); }
+.gal-cta__sub { font-size: 15px; color: var(--text-muted); }
+.gal-cta__btn { position: relative; margin-top: 4px; padding: 11px 12px; font-size: 16px; text-align: center; white-space: nowrap; }
+.gal-socials { display: flex; justify-content: center; gap: 10px; }
+.gal-social {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--social-bg);
+  color: var(--social-fg);
+  font: 700 12px/1 var(--font-system);
+}
+.gal-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.gal-btn {
+  position: relative;
+  padding: 10px 8px;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+  white-space: nowrap;
+  text-transform: var(--heading-transform);
+  letter-spacing: var(--heading-tracking);
+  border-radius: var(--btn-radius);
+}
+.gal-btn--save { background: var(--surface-elevated); color: var(--on-surface); border: var(--border-width) solid var(--border); }
+.gal-btn--share { background: var(--btn-share-bg); color: var(--btn-share-fg); border: var(--border-width) solid transparent; }
+.gal-btn--all { background: var(--surface-elevated); color: var(--on-surface); border: var(--border-width) solid var(--border-subtle); }
+
+/* Marcadores numerados: unen cada pieza del teléfono con su fila de la lista */
+.mk {
+  position: absolute;
+  top: -9px;
+  right: -9px;
+  z-index: 2;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--marker-bg);
+  color: var(--marker-fg);
+  font: 700 12px/22px var(--font-mono);
+  font-style: normal;
+  text-align: center;
+  text-transform: none;
+  letter-spacing: 0;
+}
+.mk--inline { position: static; display: inline-block; margin-left: 6px; vertical-align: 0.15em; }
+.mk--photo { top: auto; right: auto; left: 14px; bottom: 16px; }
+.mk--page { top: auto; right: 12px; bottom: 12px; }
+.gal-notes { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 16px; }
+.gal-notes h2 { font-size: 52px; }
+.gal-map { list-style: none; margin: 0; padding: 0; display: grid; }
+.gal-map li {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr) auto;
+  gap: 14px;
+  align-items: center;
+  padding: 9px 0;
+  font-size: 22px;
+  line-height: 1.25;
+  border-bottom: var(--border-width) solid var(--border-subtle);
+}
+.gal-map .mk { position: static; }
+.gal-map code { font-size: 18px; text-align: right; }
+.gal-map__not { grid-template-columns: 32px minmax(0, 1fr); color: var(--deck-muted); border-bottom: none; }
+
 /* --- Slide 11 · Qué se rompió ---------------------------------------------- */
-.breaks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+.breaks { display: grid; grid-template-columns: repeat(2, 1fr); gap: 56px; }
 .break { display: flex; flex-direction: column; gap: 14px; }
 .break h3 { font-size: 30px; }
 .break p { font-size: 22px; color: var(--deck-muted); line-height: 1.35; }
@@ -755,7 +1073,7 @@ kbd {
 
 /* ❌ ANTIPATRÓN INTENCIONAL (a): hex escrito a mano.
    Copiado de Casa Aurora (rosa-100, cacao-600, rosa-300). Fíjate cómo
-   NO cambia aunque el envoltorio sea Nocturne. Es el único lugar fuera
+   NO cambia aunque el envoltorio sea Molino Central. Es el único lugar fuera
    del bloque de tokens con valores literales, y está aquí para romperse. */
 .antipattern-hardcoded-badge {
   background: #fbe6ec;
@@ -772,13 +1090,6 @@ kbd {
   background: var(--surface-elevated);
   color: var(--on-accent);
 }
-
-/* ❌ ANTIPATRÓN INTENCIONAL (c): nombre por valor que miente.
-   Alguien llamó al token por su color… y la marca cambió a cian. */
-.antipattern-lying-name {
-  --pink: var(--neon-cyan-400);
-}
-.antipattern-lying-name .price { color: var(--pink); font-size: 30px; font-weight: 800; }
 
 /* --- Slide 12 · Reglas ----------------------------------------------------- */
 .family-chips { display: flex; flex-wrap: wrap; gap: 14px; }
@@ -810,32 +1121,6 @@ kbd {
   color: var(--deck-emphasis);
 }
 
-/* --- Slide 13 · Tabla de capas --------------------------------------------- */
-.scope {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 30px;
-}
-.scope th,
-.scope td {
-  text-align: left;
-  padding: 18px 26px;
-  border-bottom: var(--border-width) solid var(--table-rule);
-}
-.scope thead th {
-  background: var(--table-head-bg);
-  font-family: var(--font-mono);
-  font-size: 20px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--deck-muted);
-}
-.scope td:last-child { width: 200px; text-align: center; font-weight: 700; }
-.scope .is-done { color: var(--success); }
-.scope .is-partial { color: var(--warning); }
-.scope .is-out { color: var(--deck-muted); }
-.scope tr.is-current td { background: var(--surface-elevated); }
-
 /* --- Slide 14 · Límites ---------------------------------------------------- */
 .limits { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
 .limits li {
@@ -851,6 +1136,11 @@ kbd {
 }
 .limits .instead { font-size: 22px; color: var(--deck-muted); font-family: var(--font-mono); }
 .limits .instead::before { content: "→ "; color: var(--deck-emphasis); }
+.honest {
+  padding: 6px 0 6px 28px;
+  font-size: 28px;
+  border-left: calc(var(--border-width) * 4) solid var(--deck-emphasis);
+}
 
 /* --- Slide 16 · Q&A -------------------------------------------------------- */
 .qa h1 { font-size: 150px; }
@@ -871,64 +1161,64 @@ kbd {
     <p class="kicker">Charla técnica · Frontend</p>
     <h1>Design Tokens y <span class="em">multitenancy visual</span></h1>
     <blockquote class="thesis">
-      Si el color vive en el componente, no tienes temas.
-      Si vive en un <strong>token con nombre de rol</strong>, tienes multitenancy visual.
+      Si tu componente dice 'rosa', solo sirve para un cliente.<br>
+      Si dice <strong>'acento'</strong>, sirve para todos.
     </blockquote>
-    <p class="hint">→ avanzar · t cambia el tema · n notas · ? ayuda</p>
     <aside class="notes">
       Presentarse en 20 s. Leer la tesis en voz alta, despacio: es la frase que quiero que se lleven.
+      "Si tu componente dice 'rosa', solo sirve para un cliente. Si dice 'acento', sirve para todos."
       Avisar: "estas slides usan exactamente lo que voy a explicar".
     </aside>
   </section>
 
   <!-- =====================================================================
-       2 · GANCHO: dos clientes
+       2 · GANCHO: dos clientes, mismo negocio
        ===================================================================== -->
   <section class="slide" data-title="Gancho">
     <h2>Dos clientes. Dos marcas.</h2>
     <div class="versus">
       <div>
-        <p class="versus__label">Cliente A · repostería artesanal</p>
+        <p class="versus__label">Cliente A · pastelería artesanal</p>
         <!-- Maqueta con su propio tema: siempre Casa Aurora -->
         <div class="mock" data-theme="aurora">
           <div class="mock__bar"><i></i><i></i><i></i></div>
           <div class="mock__header">
             <div class="mock__logo"></div>
             <span class="mock__brand">Casa Aurora</span>
-            <nav class="mock__nav"><span>Tartas</span><span>Pedidos</span><span>Contacto</span></nav>
+            <nav class="mock__nav"><span>Carta</span><span>Encargos</span><span>Contacto</span></nav>
           </div>
           <div class="mock__body">
-            <h3 class="mock__title">Tartas de temporada</h3>
-            <p class="mock__sub">Horneadas cada mañana con fruta local.</p>
+            <h3 class="mock__title">Piezas de la semana</h3>
+            <p class="mock__sub">Horneadas cada mañana, a mano y en tandas cortas.</p>
             <div class="mock__gallery">
               <div class="art art--1"></div><div class="art art--2"></div><div class="art art--3"></div>
             </div>
             <div class="mock__foot">
-              <span class="mock__status">✓ Pedido confirmado</span>
-              <span class="btn">Reservar pedido</span>
+              <span class="mock__status">✓ Encargo confirmado</span>
+              <span class="btn">Reservar una caja</span>
             </div>
           </div>
         </div>
       </div>
       <div>
-        <p class="versus__label">Cliente B · club de música en vivo</p>
-        <!-- Maqueta con su propio tema: siempre Nocturne -->
-        <div class="mock" data-theme="nocturne">
+        <p class="versus__label">Cliente B · panificadora industrial</p>
+        <!-- Maqueta con su propio tema: siempre Molino Central -->
+        <div class="mock" data-theme="molino">
           <div class="mock__bar"><i></i><i></i><i></i></div>
           <div class="mock__header">
             <div class="mock__logo"></div>
-            <span class="mock__brand">Nocturne</span>
-            <nav class="mock__nav"><span>Agenda</span><span>Entradas</span><span>Contacto</span></nav>
+            <span class="mock__brand">Molino Central</span>
+            <nav class="mock__nav"><span>Catálogo</span><span>Pedidos</span><span>Contacto</span></nav>
           </div>
           <div class="mock__body">
-            <h3 class="mock__title">Esta noche en vivo</h3>
-            <p class="mock__sub">Puertas a las 22:00. Aforo limitado.</p>
+            <h3 class="mock__title">Productos de la semana</h3>
+            <p class="mock__sub">Pan fresco a escala, con reparto antes de las 6:00.</p>
             <div class="mock__gallery">
               <div class="art art--1"></div><div class="art art--2"></div><div class="art art--3"></div>
             </div>
             <div class="mock__foot">
-              <span class="mock__status">✓ Entrada reservada</span>
-              <span class="btn">Comprar entradas</span>
+              <span class="mock__status">✓ Pedido confirmado</span>
+              <span class="btn">Pedir cotización</span>
             </div>
           </div>
         </div>
@@ -936,8 +1226,8 @@ kbd {
     </div>
     <p class="question heading">¿Cuánto código diferente hay entre ellos?</p>
     <aside class="notes">
-      Dejar que miren 5 s. Preguntar en voz alta y esperar respuestas: "¿el 50 %? ¿dos proyectos?".
-      No responder todavía.
+      Dos panaderías: mismo negocio, mismas secciones. Dejar que miren 5 s.
+      Preguntar en voz alta y esperar respuestas: "¿el 50 %? ¿dos proyectos?". No responder todavía.
     </aside>
   </section>
 
@@ -962,13 +1252,13 @@ kbd {
         </ul>
 <pre class="code sm"><span class="c">// themes.json · semantic.accent</span>
 <span class="del">- "accent": "{rosa-300}",</span>
-<span class="add">+ "accent": "{neon-magenta-400}",</span>
+<span class="add">+ "accent": "{amarillo-400}",</span>
 <span class="del">- "heading-transform": "none",</span>
 <span class="add">+ "heading-transform": "uppercase",</span></pre>
       </div>
     </div>
     <aside class="notes">
-      Cero líneas de componente. Lo que cambia es un JSON. Los textos sí difieren, pero eso es configuración, no código.
+      Cero líneas de componente. Lo que cambia es un JSON. Los textos sí difieren (artesanal frente a industrial), pero eso es configuración, no código.
       Si hay tiempo, mostrar la demo con el switcher.
     </aside>
   </section>
@@ -983,8 +1273,8 @@ kbd {
   <span class="k">if</span> (tenant === <span class="s">'aurora'</span>) {
     background = <span class="s">'#f2b6c4'</span>;
     borderRadius = <span class="s">'28px'</span>;
-  } <span class="k">else if</span> (tenant === <span class="s">'nocturne'</span>) {
-    background = <span class="s">'#ff2bd6'</span>;
+  } <span class="k">else if</span> (tenant === <span class="s">'molino'</span>) {
+    background = <span class="s">'#ffc20e'</span>;
     borderRadius = <span class="s">'0px'</span>;
   } <span class="k">else</span> {
     <span class="c">// ¿Cliente 12? Nadie se acordó de este archivo</span>
@@ -1047,112 +1337,200 @@ kbd {
         <h3>Dicen <span class="em">qué es</span></h3>
         <ul class="token-list">
           <li><span class="chip" style="background: var(--rosa-300);"></span><code>--rosa-300</code></li>
-          <li><span class="chip" style="background: var(--neon-magenta-400);"></span><code>--neon-magenta-400</code></li>
+          <li><span class="chip" style="background: var(--amarillo-400);"></span><code>--amarillo-400</code></li>
           <li><span class="chip" style="background: var(--cacao-900);"></span><code>--cacao-900</code></li>
         </ul>
       </div>
       <div class="card col">
         <p class="kicker">Semánticos · por rol</p>
         <h3>Dicen <span class="em">para qué sirve</span></h3>
-        <ul class="token-list">
-          <li><span class="chip" style="background: var(--accent);"></span><code>--accent</code></li>
-          <li><span class="chip" style="background: var(--surface);"></span><code>--surface</code></li>
-          <li><span class="chip" style="background: var(--on-surface);"></span><code>--on-surface</code></li>
+        <ul class="token-list token-list--defined">
+          <li>
+            <span class="chip" style="background: var(--accent);"></span>
+            <span><code>--accent</code><span class="definition">El color que dice 'aquí actúa': botón principal, elemento activo, lo seleccionado.</span></span>
+          </li>
+          <li>
+            <span class="chip chip--text" style="color: var(--text-muted);">Aa</span>
+            <span><code>--text-muted</code><span class="definition">Texto secundario, con menos peso: subtítulos, ayudas, fechas.</span></span>
+          </li>
+          <li>
+            <span class="chip" style="background: var(--surface);"></span>
+            <span><code>--surface</code></span>
+          </li>
         </ul>
       </div>
     </div>
     <p class="muted center">Pulsa <kbd>t</kbd>: los de la izquierda no cambian; los de la derecha, sí.</p>
     <aside class="notes">
       Cambiar el tema en vivo con "t". Los primitivos son fijos; los roles apuntan a otro primitivo.
-      Los dos son necesarios: los primitivos son la paleta, los roles son el contrato.
+      Leer las dos definiciones en lenguaje llano: accent es "aquí actúa"; text-muted es "texto con menos peso".
+      Los dos niveles son necesarios: los primitivos son la paleta, los roles son el contrato.
     </aside>
   </section>
 
   <!-- =====================================================================
-       7 · POR QUÉ IMPORTA EL NOMBRE: la cadena de tres niveles
+       7 · POR QUÉ IMPORTA EL NOMBRE: primero la idea, después el código
        ===================================================================== -->
-  <section class="slide" data-title="Por qué importa el nombre">
+  <section class="slide slide--roles" data-title="Por qué importa el nombre">
     <h2>El componente no sabe de colores, <span class="em">sabe de roles.</span></h2>
-    <div class="row" style="align-items: center; gap: 56px;">
-      <div class="chain grow">
-        <div class="chain__step">
-          <p class="chain__label"><b>Componente</b>CSS</p>
-<pre class="code"><span class="k">.btn</span> { background: var(--btn-bg); }</pre>
-        </div>
-        <span class="chain__arrow" aria-hidden="true">↓</span>
-        <div class="chain__step">
-          <p class="chain__label"><b>Nivel 3</b>componente</p>
-<pre class="code">--btn-bg: var(--accent);</pre>
-        </div>
-        <span class="chain__arrow" aria-hidden="true">↓</span>
-        <div class="chain__step">
-          <p class="chain__label"><b>Nivel 2</b>semántico</p>
-<pre class="code">--accent: <span class="only-aurora">var(--rosa-300);</span><span class="only-nocturne">var(--neon-magenta-400);</span></pre>
-        </div>
-        <span class="chain__arrow" aria-hidden="true">↓</span>
-        <div class="chain__step">
-          <p class="chain__label"><b>Nivel 1</b>primitivo</p>
-<pre class="code"><span class="only-aurora">--rosa-300: <span class="n">#f2b6c4</span>;</span><span class="only-nocturne">--neon-magenta-400: <span class="n">#ff2bd6</span>;</span></pre>
+    <div class="roles-grid">
+      <div class="col" style="gap: 22px;">
+        <p class="analogy">Un guion dice «entra el protagonista», no «entra Brad Pitt». Cambias de elenco y la obra es la misma.</p>
+        <p class="analogy-punch">El componente es el guion. El tema es el elenco.</p>
+        <div class="asks">
+          <div class="ask ask--bad">
+            <p class="ask__title">✕ Pide un color</p>
+            <p class="ask__quote">«Dame rosa»</p>
+            <p class="ask__result">→ Solo sirve en Casa Aurora</p>
+          </div>
+          <div class="ask ask--good">
+            <p class="ask__title">✓ Pide un rol</p>
+            <p class="ask__quote">«Dame el color de acción»</p>
+            <p class="ask__result">→ Aurora responde rosa, Molino responde amarillo</p>
+          </div>
         </div>
       </div>
-      <div class="col center" style="flex: 0 0 300px;">
-        <span class="btn">Reservar</span>
-        <p class="small muted">Botón real del deck. Pulsa <kbd>t</kbd>.</p>
+
+      <div class="zones">
+        <div class="zone">
+          <p class="zone__label">No cambia · igual en los dos clientes</p>
+          <div class="zone__row">
+<pre class="code"><span class="k">.btn</span> { background: var(--accent); }</pre>
+            <div class="zone__demo">
+              <span class="btn btn--accent">Reservar</span>
+              <p class="small muted">Pulsa <kbd>t</kbd></p>
+            </div>
+          </div>
+        </div>
+        <p class="zone-divider"><span>aquí entra el tema</span></p>
+        <div class="zone zone--theme">
+          <p class="zone__label">Sí cambia · cada tema responde distinto</p>
+          <div class="tenant-cols">
+            <div class="tenant-col tenant-col--aurora">
+              <p class="tenant-col__name">Casa Aurora</p>
+<pre class="code">--accent: var(--rosa-300);
+--rosa-300: <span class="n">#f2b6c4</span>;</pre>
+            </div>
+            <div class="tenant-col tenant-col--molino">
+              <p class="tenant-col__name">Molino Central</p>
+<pre class="code">--accent: var(--amarillo-400);
+--amarillo-400: <span class="n">#ffc20e</span>;</pre>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <aside class="notes">
-      Leer de arriba a abajo. Al cambiar de tema, solo cambian las dos últimas líneas: el componente y su token no se tocan.
+      Leer la analogía del guion: el componente es el guion, el tema es el elenco.
+      Señalar las dos zonas: arriba "NO CAMBIA", abajo "SÍ CAMBIA". Pulsar "t": el botón cambia y solo importa la mitad de abajo; se resalta la columna del tema activo.
+      El nivel de componente (--btn-bg) vuelve más tarde en la Demo 2 como remate.
     </aside>
   </section>
 
   <!-- =====================================================================
-       8 · FAMILIAS DE ROLES (muestras en vivo con el tema actual)
+       8 · FAMILIAS DE ROLES (diapositiva clave)
+       Cada fila: qué significa, sus tokens con muestras en vivo del tema
+       activo y un ejemplo de interfaz pintado SOLO con esos tokens.
        ===================================================================== -->
-  <section class="slide" data-title="Familias de roles">
-    <h2>Familias de roles</h2>
-    <div class="families">
-      <div class="card family">
-        <h3>Superficies</h3>
-        <ul>
-          <li><span class="chip" style="background: var(--surface);"></span><span class="name">surface<span class="value" data-readout="surface"></span></span></li>
-          <li><span class="chip" style="background: var(--surface-elevated);"></span><span class="name">surface-elevated<span class="value" data-readout="surface-elevated"></span></span></li>
-          <li><span class="chip" style="background: var(--surface-overlay);"></span><span class="name">surface-overlay<span class="value" data-readout="surface-overlay"></span></span></li>
-        </ul>
-      </div>
-      <div class="card family">
-        <h3>Contenido</h3>
-        <ul>
-          <li><span class="chip chip--text" style="color: var(--on-surface);">Aa</span><span class="name">on-surface<span class="value" data-readout="on-surface"></span></span></li>
-          <li><span class="chip chip--text" style="color: var(--text-muted);">Aa</span><span class="name">text-muted<span class="value" data-readout="text-muted"></span></span></li>
-        </ul>
-      </div>
-      <div class="card family">
-        <h3>Acento</h3>
-        <ul>
-          <li><span class="chip" style="background: var(--accent);"></span><span class="name">accent<span class="value" data-readout="accent"></span></span></li>
-          <li><span class="chip chip--text" style="background: var(--accent); color: var(--on-accent);">Aa</span><span class="name">on-accent<span class="value" data-readout="on-accent"></span></span></li>
-        </ul>
-      </div>
-      <div class="card family">
-        <h3>Bordes</h3>
-        <ul>
-          <li><span class="chip" style="background: var(--surface); border-color: var(--border); border-width: 4px;"></span><span class="name">border<span class="value" data-readout="border"></span></span></li>
-          <li><span class="chip" style="background: var(--surface); border-color: var(--border-subtle); border-width: 4px;"></span><span class="name">border-subtle<span class="value" data-readout="border-subtle"></span></span></li>
-        </ul>
-      </div>
-      <div class="card family">
-        <h3>Estados</h3>
-        <ul>
-          <li><span class="chip" style="background: var(--success);"></span><span class="name">success<span class="value" data-readout="success"></span></span></li>
-          <li><span class="chip" style="background: var(--error);"></span><span class="name">error<span class="value" data-readout="error"></span></span></li>
-          <li><span class="chip" style="background: var(--warning);"></span><span class="name">warning<span class="value" data-readout="warning"></span></span></li>
-          <li><span class="chip" style="background: var(--focus);"></span><span class="name">focus<span class="value" data-readout="focus"></span></span></li>
-        </ul>
-      </div>
+  <section class="slide slide--families" data-title="Familias de roles">
+    <div class="fam-head">
+      <h2>Familias de roles</h2>
+      <p class="muted">También son roles: tipografía, forma, espaciado y elevación.</p>
     </div>
-    <p class="muted small">Y también son roles: tipografía, forma (radios, grosor de borde), espaciado y elevación.</p>
+    <div class="fam-list">
+
+      <article class="card fam">
+        <div class="fam__intro">
+          <h3>Superficies</h3>
+          <p class="fam__meaning">Los fondos sobre los que se apoya todo.</p>
+          <p class="fam__where">Fondo de página, tarjetas, menús flotantes</p>
+        </div>
+        <ul class="fam__tokens">
+          <li><span class="swatch" style="background: var(--surface);"></span><span class="name">surface<span class="value" data-readout="surface"></span></span></li>
+          <li><span class="swatch" style="background: var(--surface-elevated);"></span><span class="name">surface-elevated<span class="value" data-readout="surface-elevated"></span></span></li>
+          <li><span class="swatch" style="background: var(--surface-overlay);"></span><span class="name">surface-overlay<span class="value" data-readout="surface-overlay"></span></span></li>
+        </ul>
+        <div class="fam__example ex-surfaces" aria-hidden="true">
+          <span class="ex-label">página</span>
+          <div class="ex-card"><span class="ex-label">tarjeta</span></div>
+          <div class="ex-menu"><span class="ex-label">menú</span></div>
+        </div>
+      </article>
+
+      <article class="card fam">
+        <div class="fam__intro">
+          <h3>Contenido</h3>
+          <p class="fam__meaning">El texto que va encima de una superficie.</p>
+          <p class="fam__where">Títulos, subtítulos, fechas</p>
+        </div>
+        <ul class="fam__tokens">
+          <li><span class="swatch swatch--text" style="color: var(--on-surface);">Aa</span><span class="name">on-surface<span class="value" data-readout="on-surface"></span></span></li>
+          <li><span class="swatch swatch--text" style="color: var(--text-muted);">Aa</span><span class="name">text-muted<span class="value" data-readout="text-muted"></span></span></li>
+        </ul>
+        <div class="fam__example" aria-hidden="true">
+          <div>
+            <p class="ex-title">Boda de Ana y Luis</p>
+            <p class="ex-sub">Sábado 14 · 248 fotos</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="card fam">
+        <div class="fam__intro">
+          <h3>Acento</h3>
+          <p class="fam__meaning">El color que dice 'aquí actúa'.</p>
+          <p class="fam__where">«Reservar mi fecha», pestaña activa</p>
+        </div>
+        <ul class="fam__tokens">
+          <li><span class="swatch" style="background: var(--accent);"></span><span class="name">accent<span class="value" data-readout="accent"></span></span></li>
+          <li><span class="swatch swatch--text" style="background: var(--accent); color: var(--on-accent);">Aa</span><span class="name">on-accent<span class="value" data-readout="on-accent"></span></span></li>
+        </ul>
+        <div class="fam__example" aria-hidden="true">
+          <span class="btn ex-btn">Reservar mi fecha</span>
+          <span class="ex-tabs"><span class="is-active">Fotos</span><span>Video</span></span>
+        </div>
+      </article>
+
+      <article class="card fam">
+        <div class="fam__intro">
+          <h3>Bordes</h3>
+          <p class="fam__meaning">Las líneas que delimitan y separan.</p>
+          <p class="fam__where">Campos de formulario, separadores</p>
+        </div>
+        <ul class="fam__tokens">
+          <li><span class="swatch swatch--border" style="border-color: var(--border);"></span><span class="name">border<span class="value" data-readout="border"></span></span></li>
+          <li><span class="swatch swatch--border" style="border-color: var(--border-subtle);"></span><span class="name">border-subtle<span class="value" data-readout="border-subtle"></span></span></li>
+        </ul>
+        <div class="fam__example" aria-hidden="true">
+          <span class="ex-field">Tu correo</span>
+          <span class="ex-rows"><span>Fotos</span><span>Videos</span></span>
+        </div>
+      </article>
+
+      <article class="card fam">
+        <div class="fam__intro">
+          <h3>Estados</h3>
+          <p class="fam__meaning">Lo que el sistema le cuenta al usuario.</p>
+          <p class="fam__where">Éxito, error, aviso y foco del teclado</p>
+        </div>
+        <ul class="fam__tokens">
+          <li><span class="swatch" style="background: var(--success);"></span><span class="name">success<span class="value" data-readout="success"></span></span></li>
+          <li><span class="swatch" style="background: var(--error);"></span><span class="name">error<span class="value" data-readout="error"></span></span></li>
+          <li><span class="swatch" style="background: var(--warning);"></span><span class="name">warning<span class="value" data-readout="warning"></span></span></li>
+          <li><span class="swatch" style="background: var(--focus);"></span><span class="name">focus<span class="value" data-readout="focus"></span></span></li>
+        </ul>
+        <div class="fam__example" aria-hidden="true">
+          <span class="ex-state" style="--state: var(--success);">✓ Listo</span>
+          <span class="ex-state" style="--state: var(--error);">✕ Error</span>
+          <span class="ex-state" style="--state: var(--warning);">! Aviso</span>
+          <span class="ex-focus">Foco</span>
+        </div>
+      </article>
+
+    </div>
     <aside class="notes">
-      Los valores bajo cada nombre se leen en vivo con getComputedStyle. Pulsar "t" para que vean cómo cambian.
+      La diapositiva clave: quedarse aquí. Recorrer fila por fila: qué significa, cómo se llama, dónde se ve.
+      Los valores bajo cada nombre se leen en vivo con getComputedStyle. Pulsar "t": cambian los valores y los ejemplos, no los nombres.
       Insistir en que "contenido" y "acento" van en pareja con su superficie.
     </aside>
   </section>
@@ -1161,10 +1539,9 @@ kbd {
        9 · CHECKPOINT
        ===================================================================== -->
   <section class="slide center" data-title="Checkpoint">
-    <p class="checkpoint heading">¿Alguien ya tiene algo así en su proyecto?</p>
-    <span class="pill">30 s · manos arriba</span>
+    <p class="checkpoint heading">¿Alguien ya pensó en un caso de uso en sus proyectos, o ya tiene algo así?</p>
     <aside class="notes">
-      Contar manos. Preguntar a una persona qué nombres usa. Sirve para calibrar el resto de la charla.
+      30 s, manos arriba. Contar manos. Preguntar a una persona qué nombres usa. Sirve para calibrar el resto de la charla.
     </aside>
   </section>
 
@@ -1212,14 +1589,14 @@ kbd {
           <div class="mock" data-theme="aurora">
             <div class="mock__body">
               <span class="shot__tenant">Casa Aurora</span>
-              <div class="antipattern-hardcoded-badge">2×1 en tartas este finde</div>
+              <div class="antipattern-hardcoded-badge">2×1 en tartas este fin de semana</div>
               <span class="verdict verdict--ok">✓ se ve bien</span>
             </div>
           </div>
-          <div class="mock" data-theme="nocturne">
+          <div class="mock" data-theme="molino">
             <div class="mock__body">
-              <span class="shot__tenant">Nocturne</span>
-              <div class="antipattern-hardcoded-badge">2×1 en entradas este finde</div>
+              <span class="shot__tenant">Molino Central</span>
+              <div class="antipattern-hardcoded-badge">2×1 en lotes de pan este fin de semana</div>
               <span class="verdict verdict--bad">✗ sigue rosa pastel</span>
             </div>
           </div>
@@ -1238,37 +1615,21 @@ kbd {
               <span class="verdict verdict--ok">✓ se lee (por casualidad)</span>
             </div>
           </div>
-          <div class="mock" data-theme="nocturne">
+          <div class="mock" data-theme="molino">
             <div class="mock__body">
-              <span class="shot__tenant">Nocturne</span>
-              <div class="shot__card antipattern-wrong-pair">Detalle de la entrada · fila 12</div>
+              <span class="shot__tenant">Molino Central</span>
+              <div class="shot__card antipattern-wrong-pair">Detalle del pedido · 300 bollos</div>
               <span class="verdict verdict--bad">✗ texto oscuro sobre oscuro</span>
             </div>
           </div>
         </div>
-        <h3>b · Pareja equivocada</h3>
+        <h3>b · Superficie sin su pareja</h3>
         <p><code>surface-elevated</code> con <code>on-accent</code>: en el tema oscuro el texto desaparece.</p>
-      </div>
-
-      <!-- (c) Nombre por valor que miente -->
-      <div class="break">
-        <div class="shot">
-          <div class="mock antipattern-lying-name" data-theme="nocturne">
-            <div class="mock__body">
-              <span class="shot__tenant">Tras el rediseño</span>
-<pre class="code sm" style="font-size: 17px; padding: 12px 16px;"><span class="k">.price</span> { color: var(--pink); }</pre>
-              <span class="price">35 € · precio</span>
-              <span class="verdict verdict--bad">✗ «--pink» ahora es cian</span>
-            </div>
-          </div>
-        </div>
-        <h3>c · Nombres que mienten</h3>
-        <p>Si el nombre describe el valor, el día que cambia el valor el nombre miente.</p>
       </div>
 
     </div>
     <aside class="notes">
-      Los tres errores están en la demo (HardcodedBadge, WrongPairCard). El (b) es el más traicionero: en el tema claro no se nota.
+      Los dos errores están en la demo (HardcodedBadge, WrongPairCard). El (b) es el más traicionero: en el tema claro no se nota.
       Estas "capturas" son CSS con los mismos tokens; el (a) es el único lugar con hex a propósito.
     </aside>
   </section>
@@ -1292,36 +1653,91 @@ kbd {
         </div>
       </div>
       <ol class="rules">
-        <li>Toda superficie viaja con su <code>on-surface</code>.</li>
-        <li>Los componentes consumen <span class="em">roles</span>: nunca primitivos ni hex.</li>
-        <li>Los primitivos solo existen dentro del archivo de tema.</li>
+        <li>Cada fondo viaja con su color de texto (<code>surface</code> → <code>on-surface</code>).</li>
+        <li>El «rosa» solo se escribe en el tema. Los componentes solo dicen <span class="em">«acento»</span>.</li>
       </ol>
     </div>
     <aside class="notes">
-      Cerrar el arco personal: lo que nombré por intuición era la mitad de un sistema. Las tres reglas son las que hoy reviso en code review.
+      Cerrar el arco personal: lo que nombré por intuición era la mitad de un sistema. Las dos reglas son las que hoy reviso en code review.
     </aside>
   </section>
 
   <!-- =====================================================================
-       13 · CAPAS DE UN SISTEMA MULTITENANT (alcance honesto)
+       13 · ASÍ SE VE EN PRODUCCIÓN (el resultado)
+       Pantalla recreada (sin foto real). La interfaz solo lee tokens del
+       deck: al pulsar «t» se re-tematiza en vivo. La foto, el logo del
+       evento y los íconos de redes NO son tokens: no cambian con el tema.
        ===================================================================== -->
-  <section class="slide" data-title="Capas de un sistema multitenant">
-    <h2>Capas de un sistema multitenant</h2>
-    <table class="scope">
-      <thead>
-        <tr><th scope="col">Capa</th><th scope="col">Estado</th></tr>
-      </thead>
-      <tbody>
-        <tr class="is-current"><td>Identidad visual por tenant (tokens)</td><td class="is-done">✅</td></tr>
-        <tr><td>Configuración y contenido por tenant</td><td class="is-partial">parcial</td></tr>
-        <tr><td>Resolución de tenant (subdominio / path / header)</td><td class="is-out">—</td></tr>
-        <tr><td>Aislamiento de datos (<code>tenant_id</code>, schema, BD)</td><td class="is-out">—</td></tr>
-      </tbody>
-    </table>
-    <p class="lead" style="font-size: 34px;">Diseñamos la capa de theming pensando en multitenancy.</p>
+  <section class="slide slide--gallery" data-title="Galería en producción">
+    <div class="phone" role="img" aria-label="Pantalla de galería de fotos de un evento, recreada con los tokens del tema activo">
+      <div class="gal-photo" aria-hidden="true">
+        <!-- Ilustración neutra en lugar de una foto real: lee --photo-*, que no dependen del tema -->
+        <svg class="gal-photo__img" viewBox="0 0 352 340" preserveAspectRatio="xMidYMid slice">
+          <rect width="352" height="340" style="fill: var(--photo-bg);" />
+          <rect y="262" width="352" height="78" style="fill: var(--photo-floor);" />
+          <path d="M70 262 V150 A106 106 0 0 1 282 150 V262 H250 V150 A74 74 0 0 0 102 150 V262 Z" style="fill: var(--photo-arch);" />
+          <circle cx="78" cy="132" r="26" style="fill: var(--photo-balloon-1);" />
+          <circle cx="104" cy="96" r="22" style="fill: var(--photo-balloon-2);" />
+          <circle cx="140" cy="66" r="24" style="fill: var(--photo-balloon-3);" />
+          <circle cx="212" cy="66" r="24" style="fill: var(--photo-balloon-1);" />
+          <circle cx="248" cy="96" r="22" style="fill: var(--photo-balloon-3);" />
+          <circle cx="274" cy="132" r="26" style="fill: var(--photo-balloon-2);" />
+          <circle cx="176" cy="54" r="20" style="fill: var(--photo-balloon-2);" />
+          <!-- Logo del evento: contenido, no tema -->
+          <circle cx="176" cy="206" r="30" style="fill: var(--photo-logo-bg);" />
+          <text x="176" y="213" text-anchor="middle" style="fill: var(--photo-logo-fg); font: 700 19px var(--font-system);">A·L</text>
+        </svg>
+        <div class="gal-top">
+          <span class="gal-pill">‹ Ver galería<i class="mk">6</i></span>
+          <span class="gal-lang"><span class="is-active">ES</span><span>EN</span></span>
+        </div>
+        <span class="gal-arrow gal-arrow--prev">‹</span>
+        <span class="gal-arrow gal-arrow--next">›</span>
+        <span class="gal-pill gal-count">1 / 2</span>
+        <span class="gal-gift">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="9" width="18" height="12" rx="1"/><path d="M12 9v12M3 13h18M12 9C10 5 6 5 6 7.5S10 9 12 9zM12 9c2-4 6-4 6-1.5S14 9 12 9z"/></svg>
+        </span>
+        <i class="mk mk--photo">9</i>
+      </div>
+
+      <div class="gal-body" aria-hidden="true">
+        <div class="gal-cta">
+          <h3>¿Y si las próximas fotos son las tuyas?<i class="mk mk--inline">3</i></h3>
+          <p class="gal-cta__sub">Reserva para tu próximo evento.<i class="mk mk--inline">4</i></p>
+          <span class="btn gal-cta__btn">Reservar mi fecha<i class="mk">5</i></span>
+          <div class="gal-socials">
+            <span class="gal-social">IG</span><span class="gal-social">TT</span><span class="gal-social">f</span>
+          </div>
+          <i class="mk">2</i>
+        </div>
+        <div class="gal-row">
+          <span class="gal-btn gal-btn--save">Guardar<i class="mk">7</i></span>
+          <span class="gal-btn gal-btn--share">Compartir<i class="mk">8</i></span>
+        </div>
+        <span class="gal-btn gal-btn--all">Ver todas las fotos de la fiesta</span>
+        <i class="mk mk--page">1</i>
+      </div>
+    </div>
+
+    <div class="gal-notes">
+      <p class="kicker">El resultado</p>
+      <h2>Así se ve en producción</h2>
+      <ol class="gal-map">
+        <li><i class="mk">1</i><span>Fondo de la página</span><code>surface</code></li>
+        <li><i class="mk">2</i><span>Tarjeta «¿Y si…?» y «Ver todas las fotos»</span><code>surface-elevated + border-subtle</code></li>
+        <li><i class="mk">3</i><span>Título de la tarjeta</span><code>on-surface</code></li>
+        <li><i class="mk">4</i><span>Subtítulo</span><code>text-muted</code></li>
+        <li><i class="mk">5</i><span>«Reservar mi fecha», ES activo, flechas</span><code>accent / on-accent</code></li>
+        <li><i class="mk">6</i><span>«Ver galería», «1 / 2», regalo</span><code>surface-overlay</code></li>
+        <li><i class="mk">7</i><span>«Guardar»</span><code>surface-elevated + border + on-surface</code></li>
+        <li><i class="mk">8</i><span>«Compartir» (degradado)</span><code>btn-share-bg</code></li>
+        <li class="gal-map__not"><i class="mk">9</i><span>No son tokens: la foto, el logo del evento (contenido) y los íconos de redes (usan el color de cada red, no el del tema).</span></li>
+      </ol>
+    </div>
     <aside class="notes">
-      Ser explícito: esto NO es multitenancy completo. Resolver el tenant y aislar datos son otras charlas.
-      Lo que sí defiendo: la capa visual no debería ser la que bloquee al cliente 12.
+      Este es el resultado. Abro la galería real y cambio el tema con un select: sin deploy.
+      Si no hay conexión, pulsar "t": esta pantalla recreada usa los mismos tokens y se re-tematiza en vivo.
+      Señalar que la foto y los íconos de redes no cambian: no todo es token.
     </aside>
   </section>
 
@@ -1337,9 +1753,11 @@ kbd {
       <li><span>Activos de marca: logos, fuentes, imágenes</span><span class="instead">assets por tenant</span></li>
       <li><span>Accesibilidad garantizada en todos los temas</span><span class="instead">validar contraste por tema</span></li>
     </ul>
+    <p class="honest">Esto resuelve la identidad visual por cliente; separar los datos de cada cliente es otro problema.</p>
     <aside class="notes">
       Los tokens resuelven el "cómo se ve", no el "qué hace". Si un tenant necesita otro flujo, eso es configuración o feature flags.
       Accesibilidad: cada tema nuevo es una combinación nueva de contrastes que hay que comprobar.
+      Ser explícito: esto NO es multitenancy completo. Resolver el tenant y aislar sus datos son otras charlas.
     </aside>
   </section>
 
@@ -1348,14 +1766,15 @@ kbd {
        ===================================================================== -->
   <section class="slide" data-title="Cierre">
     <blockquote class="thesis" style="font-size: 50px;">
-      Si el color vive en el componente, no tienes temas.
-      Si vive en un <strong>token con nombre de rol</strong>, tienes multitenancy visual.
+      Si tu componente dice 'rosa', solo sirve para un cliente.<br>
+      Si dice <strong>'acento'</strong>, sirve para todos.
     </blockquote>
     <p class="heading" style="font-size: 46px;">¿Cuántos hex hardcodeados hay hoy en tu proyecto?</p>
 <pre class="code sm" style="align-self: flex-start;"><span class="c"># un punto de partida, no una métrica</span>
 grep -rnE <span class="s">"#[0-9a-fA-F]{3,8}\b"</span> src/ | wc -l</pre>
     <aside class="notes">
-      Repetir la tesis. Dejar la pregunta en el aire unos segundos; invitar a correr el grep el lunes.
+      Repetir la tesis: "Si tu componente dice 'rosa', solo sirve para un cliente. Si dice 'acento', sirve para todos."
+      Dejar la pregunta en el aire unos segundos; invitar a correr el grep el lunes.
     </aside>
   </section>
 
@@ -1364,8 +1783,7 @@ grep -rnE <span class="s">"#[0-9a-fA-F]{3,8}\b"</span> src/ | wc -l</pre>
        ===================================================================== -->
   <section class="slide center qa" data-title="Preguntas">
     <h1>Preguntas</h1>
-    <!-- TODO: reemplazar con la URL real del repo -->
-    <p class="repo">github.com/&lt;usuario&gt;/expo-design-tokens</p>
+    <p class="repo">github.com/hitzu/expo-design-with-tokens</p>
 <pre class="code"><span class="c"># correr la demo</span>
 cd demo &amp;&amp; npm install &amp;&amp; npm run dev</pre>
     <aside class="notes">
@@ -1376,12 +1794,12 @@ cd demo &amp;&amp; npm install &amp;&amp; npm run dev</pre>
 
 </main>
 
-<!-- Pie: tema y contador -->
+<!-- Pie discreto: tema y contador -->
 <footer class="chrome">
   <span>Design Tokens · multitenancy visual</span>
   <div class="chrome__right">
     <button type="button" id="theme-toggle" title="Cambiar tema (t)">
-      <span class="swatch-dot" aria-hidden="true"></span><span id="theme-label">Nocturne</span>
+      <span class="swatch-dot" aria-hidden="true"></span><span id="theme-label">Molino Central</span>
     </button>
     <span id="counter" aria-live="polite">1 / 16</span>
   </div>
@@ -1400,7 +1818,7 @@ cd demo &amp;&amp; npm install &amp;&amp; npm run dev</pre>
     <dt><kbd>→</kbd> <kbd>Espacio</kbd> <kbd>AvPág</kbd></dt><dd>Siguiente</dd>
     <dt><kbd>←</kbd> <kbd>⇧ Espacio</kbd> <kbd>RePág</kbd></dt><dd>Anterior</dd>
     <dt><kbd>Inicio</kbd> <kbd>Fin</kbd></dt><dd>Primera / última</dd>
-    <dt><kbd>t</kbd></dt><dd>Cambiar tema (Nocturne ↔ Casa Aurora)</dd>
+    <dt><kbd>t</kbd></dt><dd>Cambiar tema (Molino Central ↔ Casa Aurora)</dd>
     <dt><kbd>n</kbd></dt><dd>Notas del presentador</dd>
     <dt><kbd>f</kbd></dt><dd>Pantalla completa</dd>
     <dt><kbd>?</kbd> <kbd>Esc</kbd></dt><dd>Mostrar / cerrar esta ayuda</dd>
@@ -1428,7 +1846,7 @@ cd demo &amp;&amp; npm install &amp;&amp; npm run dev</pre>
 
   // Los temas disponibles. Añadir uno = añadir su bloque semántico en el CSS.
   var THEMES = [
-    { id: 'nocturne', label: 'Nocturne' },
+    { id: 'molino', label: 'Molino Central' },
     { id: 'aurora', label: 'Casa Aurora' }
   ];
   var THEME_STORAGE_KEY = 'expo-design-tokens:theme';
@@ -1601,7 +2019,7 @@ cd demo &amp;&amp; npm install &amp;&amp; npm run dev</pre>
   window.addEventListener('hashchange', function () { goTo(indexFromHash()); });
 
   fitStage();
-  setTheme(readStoredTheme() || 'nocturne');
+  setTheme(readStoredTheme() || 'molino');
   goTo(indexFromHash());
   requestAnimationFrame(function () {
     requestAnimationFrame(function () { root.classList.add('is-ready'); });

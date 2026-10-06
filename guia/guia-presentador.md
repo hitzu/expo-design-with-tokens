@@ -1,18 +1,18 @@
 # Guía del presentador — Design Tokens y multitenancy visual
 
 > **Tesis (dila al inicio, demuéstrala a la mitad, repítela al cierre):**
-> *Si el color vive en el componente, no tienes temas. Si vive en un token con nombre de rol, tienes multitenancy visual.*
+> *Si tu componente dice "rosa", solo sirve para un cliente. Si dice "acento", sirve para todos.*
 
 ## Antes de empezar (checklist)
 
 - [ ] `cd demo && npm install && npm run dev` corriendo en una pestaña.
 - [ ] `slides/index.html` abierto en otra pestaña (pantalla completa con `f`).
+- [ ] La galería real abierta en otra pestaña, con el select de tema a la mano.
 - [ ] Demo en **Casa Aurora** y todas las casillas de demo desactivadas.
-- [ ] Slides en **Nocturne** (tema por defecto).
+- [ ] Slides en **Molino Central** (tema por defecto).
 - [ ] Zoom del navegador listo para que el código se lea desde la última fila.
-- [ ] URL real del repo puesta en la slide 16 (hay un `TODO` en el HTML).
 
-### Atajos
+### Atajos (no se muestran en pantalla)
 
 | Dónde | Tecla | Acción |
 |---|---|---|
@@ -29,12 +29,11 @@
 |---|---|---|---|
 | 1. Gancho + demo inicial | 1–4 | Demo 1 | 5 |
 | 2. Tokens y roles semánticos | 5–9 | Demo 2 | 10 |
-| 3. Implementación real (mi caso + romperlo) | 10–12 | Demos 3, 4, 5 | 10 |
-| 4. Multitenancy y alcance | 13 | — | 8 |
-| 5. Límites y cierre | 14–15 | — | 5 |
-| Q&A | 16 | según preguntas | resto |
+| 3. Implementación real (mi caso, romperlo, el resultado) | 10–13 | Demos 4 y 5, galería real | 10 |
+| 4. Límites y cierre | 14–15 | — | 5 |
+| Q&A | 16 | según preguntas | resto (~10 min) |
 
-> Si vas tarde, recorta del bloque 4, **nunca** del bloque 3: el caso real con sus errores es lo que más valor tiene.
+> Si vas tarde, recorta del bloque 2 (Familias puede ir más rápido), **nunca** del bloque 3: el caso real con sus errores es lo que más valor tiene.
 
 ---
 
@@ -47,13 +46,13 @@
 - "Al final de esta plática quiero que esa frase les parezca obvia."
 
 **2 · Gancho**
-- Señala los dos clientes: una repostería artesanal y un club de música en vivo.
-- Pregunta: **"¿Cuánto código diferente hay entre ellos?"**. Deja que respondan; suele salir "la mitad", "todo el CSS".
+- Dos reposterías: un estudio artesanal y una panificadora industrial. **Mismo negocio, mismas secciones.**
+- Pregunta: **"¿Cuánto código diferente hay entre ellos?"**. Deja que respondan.
 
 **3 · Revelación**
 - "Cero." Pausa.
 - 👉 **Salta a la demo (Demo 1):** cambia de tenant con el switcher o con `t`. Hazlo dos o tres veces sin hablar.
-- Vuelve a las slides: "Lo único que cambió fue un archivo de datos."
+- Vuelve a las slides: "Lo único que cambió fue un archivo de datos. Ni el menú ni las secciones."
 
 **4 · El dolor**
 - Lee el `if (tenant === 'aurora')` en voz alta. Que se sienta feo.
@@ -64,23 +63,28 @@
 
 **5 · ¿Qué son los tokens?**
 - "Un token es una decisión de diseño guardada como dato." Color, tipografía, radio, sombra.
-- Muestra que el JSON no tiene nada de React: es portable.
 
 **6 · Dos formas de nombrar** ⭐ *aquí está el 80 % del valor*
 - Primitivo: `--rosa-300` dice **qué es**. Semántico: `--accent` dice **para qué sirve**.
-- Pulsa `t` en las slides: los primitivos no cambian, los roles sí. Ese es el punto.
+- Lee las dos definiciones de la slide:
+  - `--accent`: el color que dice "aquí actúa".
+  - `--text-muted`: el texto secundario, el que pesa menos.
+- Pulsa `t`: los primitivos no cambian, los roles sí.
 
 **7 · Por qué importa el nombre**
-- "El componente no sabe de colores, sabe de roles."
-- Recorre la cadena de tres niveles: `.btn` → `--btn-bg` → `--accent` → `--rosa-300`.
-- 👉 **Salta a la demo (Demo 2 · Editor de tokens):** cambia `accent`. Todo lo que es acento se repinta, incluido el botón, aunque nadie tocó `btn-bg`. **Este es el momento memorable: hazlo lento.**
+- Lee la analogía: "Un guion dice «entra el protagonista», no «entra Brad Pitt». El componente es el guion; el tema es el elenco."
+- Señala las dos tarjetas: pedir **un color** ("dame rosa") solo sirve para un cliente; pedir **un rol** ("dame el color de acción") sirve para todos.
+- Señala las dos zonas: arriba **NO CAMBIA** (el componente), abajo **SÍ CAMBIA** (el tema). Pulsa `t`: solo se mueve la mitad de abajo.
+- 👉 **Salta a la demo (Demo 2 · Editor de tokens):** cambia `accent`. Todo lo que es acento se repinta, incluido el botón, aunque nadie tocó su token propio `btn-bg` (un token de componente que apunta a `accent`): es el remate de la slide 7. **Este es el momento memorable: hazlo lento.**
 
-**8 · Familias de roles**
-- Superficies, contenido, acento, bordes, estados.
-- "Las superficies no son un tema aparte: son **una familia** de roles." (Esto prepara el bloque 3.)
+**8 · Familias de roles** ⭐ *slide central*
+- Recorre las cinco familias con calma: superficies, contenido, acento, bordes, estados.
+- Para cada una, señala el ejemplo de UI: "esto ya lo han visto mil veces, solo que sin nombre".
+- Pulsa `t` aquí también: las muestras cambian, los nombres no.
+- "Las superficies no son un tema aparte: son **una familia** de roles." (Prepara el bloque 3.)
 
-**9 · Checkpoint (30 s)**
-- "¿Alguien ya tiene algo así en su proyecto?" Manos arriba, cuenta en voz alta, sigue.
+**9 · Checkpoint**
+- "¿Alguien ya pensó en un caso de uso en sus proyectos, o ya tiene algo así?" Manos arriba, cuenta en voz alta y sigue (≈30 s).
 - ⚠️ **No abras Q&A aquí.** Si alguien pregunta: "Excelente, guárdala para el final."
 
 ### Bloque 3 · Implementación real (10 min)
@@ -88,38 +92,36 @@
 **10 · Mi caso: empecé con superficies**
 - Cuéntalo como camino, no como lección: un sistema de galerías de fotos y photobooth para eventos donde un tema tenía que cambiar todos los colores sin tocar la estructura.
 - "Empecé nombrando superficies por necesidad. No sabía que eso ya era un subconjunto de los tokens semánticos."
-- No menciones marcas reales.
 
 **11 · Qué se rompió**
-- Recorre los tres errores de la slide y, para cada uno, demuéstralo:
-  - **Hex hardcodeado** → 👉 activa **Demo 4** y cambia a Nocturne: el banner se queda rosa pastel. "Esa pieza vive en el tenant equivocado."
-  - **Superficie sin su pareja** → 👉 activa **Demo 5** y cambia a Nocturne: el texto desaparece. "El fondo y el texto se eligen **en pareja**."
-  - **Nombres por valor que mienten** → `--pink` que hoy es cian. "El nombre por valor envejece mal."
+- Para cada error, demuéstralo:
+  - **Hex hardcodeado** → 👉 activa **Demo 4** y cambia a Molino Central: el banner se queda rosa pastel. "Esa pieza vive en el tenant equivocado."
+  - **Superficie sin su pareja** → 👉 activa **Demo 5** y cambia a Molino Central: el texto desaparece. "El fondo y el texto se eligen **en pareja**."
 
 **12 · Por eso llegué a los roles**
-- Las reglas que salieron de los errores:
-  1. Cada `surface-*` viaja con su `on-surface`.
-  2. Los componentes solo consumen roles, nunca primitivos ni hex.
-  3. Los primitivos solo se usan dentro del archivo de temas.
+- Las dos reglas que salieron de los errores:
+  1. Cada fondo viaja con su color de texto (`surface` → `on-surface`).
+  2. El "rosa" solo se escribe en el tema. Los componentes solo dicen "acento". (Es la tesis otra vez: que se note.)
 
-### Bloque 4 · Multitenancy y alcance (8 min)
+**13 · Así se ve en producción** *(el resultado)*
+- "Este es el resultado de todo lo anterior."
+- Recorre los números del mockup: fondo → `surface`, tarjeta → `surface-elevated`, "Reservar mi fecha" → `accent`, "Compartir" → token de componente.
+- Señala lo que **no** es token: la foto, el logo del evento y los íconos de redes (usan el color de cada red, no el del tema).
+- 👉 **Abre la galería real y cambia el tema con el select.** "Esto fue un cambio de datos. No hubo deploy."
 
-**13 · Capas de un sistema multitenant**
-- Recorre la tabla de arriba abajo. Dilo literal: **"Diseñamos la capa de theming pensando en multitenancy."**
-- En las filas con "—": "Esta capa no la tengo, y esto es por qué todavía no la necesito." Da más credibilidad que insinuar que todo está resuelto.
-- ⚠️ **En ningún momento afirmes que existe multitenancy completo.**
-
-### Bloque 5 · Límites y cierre (5 min)
+### Bloque 4 · Límites y cierre (5 min)
 
 **14 · Límites**
-- Un tema alcanza para **identidad visual**. No alcanza para estructura distinta, flujos distintos, funcionalidades por cliente (eso es configuración / feature flags) ni para garantizar accesibilidad por sí solo.
+- Un tema alcanza para **identidad visual**. No alcanza para estructura distinta, flujos distintos ni funcionalidades por cliente (eso es configuración / feature flags).
+- Lee la línea honesta: *"Esto resuelve la identidad visual por cliente; separar los datos de cada cliente es otro problema."*
+- ⚠️ **En ningún momento afirmes que existe multitenancy completo.**
 
 **15 · Cierre**
 - Repite la tesis. Ahora debería sonar obvia.
 - Pregunta abierta: **"¿Cuántos hex hardcodeados hay hoy en tu proyecto?"** Deja que piensen 5 segundos.
 
-**16 · Q&A**
-- Muestra el link del repo y el comando para correrlo.
+**16 · Preguntas**
+- Muestra el repo: `github.com/hitzu/expo-design-with-tokens` y el comando para correrlo.
 - Usa el banco de abajo.
 
 ---
@@ -148,13 +150,13 @@ El costo de nombrar por rol es casi cero al escribir el componente; el costo de 
 Se puede, y combina bien: configura Tailwind para que sus colores apunten a variables CSS (`accent: 'var(--accent)'`) y usa clases como `bg-accent`. Lo que no escala es `bg-pink-300` en el componente: es nombrar por valor otra vez. Una config de Tailwind por tenant en build time implica un build por tenant.
 
 **¿Dónde viven los temas: JSON, base de datos, archivos?**
-Depende de quién los edita. Equipo de desarrollo → archivos en el repo (versionados, revisables). Clientes o staff los editan → base de datos, con validación del esquema y de contraste antes de guardar. En la demo es JSON local para que se vea todo.
+Depende de quién los edita. Equipo de desarrollo → archivos en el repo (versionados, revisables). Staff o clientes los editan → base de datos, con validación del esquema y del contraste antes de guardar. Así funciona la galería real: el tema es un dato del evento, por eso cambia sin deploy.
 
 **¿Cómo evitas el parpadeo de tema incorrecto al cargar (SSR / hidratación)?**
 El tema se tiene que resolver **antes del primer pintado**: en SSR, renderiza el `data-theme` y las variables en el HTML del servidor; sin SSR, un script inline bloqueante en el `<head>` que aplique el tema antes de que cargue la app. Nunca lo apliques en un `useEffect`.
 
 **¿Cómo manejas tipografías y logos por tenant?**
-Tipografía: tokens (`font-heading`, `heading-weight`, `heading-transform`), como en la demo. Logos e imágenes son **contenido** del tenant, no tokens: viven en la configuración del tenant (URL o asset), no en la paleta.
+Tipografía: tokens (`font-heading`, `heading-weight`, `heading-transform`), como en la demo. Logos e imágenes son **contenido** del tenant, no tokens: viven en la configuración del tenant, no en la paleta.
 
 **¿Cómo migro un proyecto existente lleno de hex hardcodeados?**
 1. Inventario: `grep` de hex/rgb en el código, agrupa por valor.
@@ -171,10 +173,13 @@ Tipografía: tokens (`font-heading`, `heading-weight`, `heading-transform`), com
 ### Sobre calidad
 
 **¿Cómo garantizas contraste y accesibilidad en todos los temas?**
-Por **parejas**: cada `surface-*` con su `on-surface`, cada `accent` con su `on-accent`. Así puedes calcular el contraste de cada pareja en cada tema con un script en CI (WCAG AA: 4.5:1 texto normal, 3:1 texto grande y foco). Si un tema nuevo no pasa, no se publica.
+Por **parejas**: cada `surface-*` con su `on-surface`, cada `accent` con su `on-accent`. Así se puede calcular el contraste de cada pareja en cada tema (WCAG AA: 4.5:1 texto normal, 3:1 texto grande y foco) antes de guardar un tema nuevo; si una pareja no pasa, no se guarda.
+
+**¿Y si no eres diseñador, cómo eliges los colores?** *(respuesta de respaldo; no está en las slides)*
+Parto del color de la marca y saco los demás con relaciones de la rueda de color (análogos, complementario, tonos más claros y oscuros del mismo color). Me apoyo en IA para proponer la paleta completa por rol, y el contraste de cada pareja es el filtro objetivo: si no pasa, no importa qué tan bonito se vea. Respuesta corta; no abras la conversación sobre IA.
 
 **¿Cómo testeas que ningún tema se rompa?**
-Regresión visual **por tema**, no solo el default (Playwright, Chromatic, Percy: la misma historia/página × cada tema). Más un test de contrato: todos los temas definen todos los roles.
+Regresión visual **por tema**, no solo el default (Playwright, Chromatic, Percy: la misma página × cada tema). Más un test de contrato: todos los temas definen todos los roles.
 
 ### Sobre multitenancy
 

@@ -3,7 +3,7 @@
  *
  * Este archivo está FUERA del sistema de temas a propósito.
  * El panel no pertenece a ningún tenant: es la herramienta del presentador.
- * Tiene que leerse igual en Casa Aurora, en Nocturne y también cuando
+ * Tiene que leerse igual en Casa Aurora, en Molino Central y también cuando
  * rompemos los tokens en vivo desde el editor. Si leyera var(--surface),
  * un token roto dejaría el panel inutilizable justo en mitad de la demo.
  *

@@ -109,73 +109,74 @@
     }
   },
 
-  "nocturne": {
-    "$description": "Nocturne: club de música en vivo. Oscuro, neón, alto contraste, sans condensada en mayúsculas, esquinas rectas y brillo.",
+  "molino": {
+    "$description": "Molino Central: panificadora industrial que abastece de pan a tiendas y restaurantes. Oscuro e industrial: grafito y acero, amarillo de seguridad, sans robusta, esquinas rectas y bordes marcados, sin brillos.",
 
     "primitives": {
-      "_comment": "Nivel 1 · Primitivos. La paleta cruda del tenant: noche, humo y neones. No dicen para qué sirven, solo qué son. Ningún componente los usa directamente.",
+      "_comment": "Nivel 1 · Primitivos. La paleta cruda del tenant: grafito, acero, harina y amarillo de seguridad. No dicen para qué sirven, solo qué son. Ningún componente los usa directamente.",
 
-      "noche-950": "#07060d",
-      "noche-900": "#100e1b",
-      "noche-800": "#1a1730",
-      "noche-700": "#2a2648",
-      "violeta-400": "#6e68b0",
-      "humo-50": "#f5f2ff",
-      "humo-400": "#a7a3c4",
-      "neon-magenta-400": "#ff2bd6",
-      "neon-cyan-400": "#22e4ff",
-      "neon-lima-400": "#b6ff3b",
-      "neon-rojo-400": "#ff4d6d",
-      "neon-ambar-400": "#ffc53d",
+      "grafito-950": "#121417",
+      "grafito-900": "#1b1f24",
+      "grafito-800": "#262b32",
+      "acero-800": "#2b3642",
+      "acero-700": "#3a4a5c",
+      "acero-400": "#7d93ab",
+      "acero-200": "#aeb9c6",
+      "harina-50": "#f4f1ea",
+      "harina-300": "#d9cfbd",
+      "amarillo-400": "#ffc20e",
+      "verde-400": "#4cc38a",
+      "rojo-400": "#ff6b5b",
+      "naranja-400": "#ff9f1c",
+      "azul-300": "#6cb6ff",
 
-      "font-condensed": "\"Avenir Next Condensed\", \"Arial Narrow\", \"Roboto Condensed\", \"Helvetica Neue\", system-ui, sans-serif",
+      "font-industrial": "\"Helvetica Neue\", Arial, system-ui, sans-serif",
 
       "radius-none": "0px",
       "radius-hair": "2px",
 
-      "glow-magenta": "0 0 0 1px rgba(255, 43, 214, 0.55), 0 0 32px -4px rgba(255, 43, 214, 0.45)",
-      "glow-cyan": "0 0 0 1px rgba(34, 228, 255, 0.55), 0 0 22px -4px rgba(34, 228, 255, 0.45)"
+      "sombra-ninguna": "none"
     },
 
     "semantic": {
       "_comment": "Nivel 2 · Semánticos. Los MISMOS nombres de rol que Casa Aurora, con otros valores. Por eso el mismo componente se ve completamente distinto.",
 
       "surfaces": {
-        "surface": "{noche-950}",
-        "surface-elevated": "{noche-900}",
-        "surface-overlay": "{noche-800}"
+        "surface": "{grafito-950}",
+        "surface-elevated": "{grafito-900}",
+        "surface-overlay": "{grafito-800}"
       },
       "content": {
-        "on-surface": "{humo-50}",
-        "text-muted": "{humo-400}"
+        "on-surface": "{harina-50}",
+        "text-muted": "{acero-200}"
       },
       "accent": {
-        "accent": "{neon-magenta-400}",
-        "on-accent": "{noche-950}"
+        "accent": "{amarillo-400}",
+        "on-accent": "{grafito-950}"
       },
       "borders": {
-        "border": "{violeta-400}",
-        "border-subtle": "{noche-700}"
+        "border": "{acero-400}",
+        "border-subtle": "{acero-700}"
       },
       "states": {
-        "success": "{neon-lima-400}",
-        "error": "{neon-rojo-400}",
-        "warning": "{neon-ambar-400}",
-        "focus": "{neon-cyan-400}"
+        "success": "{verde-400}",
+        "error": "{rojo-400}",
+        "warning": "{naranja-400}",
+        "focus": "{azul-300}"
       },
       "illustration": {
-        "art-bg": "{noche-800}",
-        "art-1": "{neon-magenta-400}",
-        "art-2": "{neon-cyan-400}",
-        "art-3": "{neon-lima-400}"
+        "art-bg": "{acero-800}",
+        "art-1": "{amarillo-400}",
+        "art-2": "{acero-400}",
+        "art-3": "{harina-300}"
       },
       "typography": {
-        "font-body": "{font-condensed}",
-        "font-heading": "{font-condensed}",
+        "font-body": "{font-industrial}",
+        "font-heading": "{font-industrial}",
         "heading-weight": "800",
         "heading-style": "normal",
         "heading-transform": "uppercase",
-        "heading-tracking": "0.08em"
+        "heading-tracking": "0.04em"
       },
       "shape": {
         "radius-sm": "{radius-none}",
@@ -184,12 +185,12 @@
         "border-width": "2px"
       },
       "spacing": {
-        "space-section": "56px",
-        "space-card": "20px"
+        "space-section": "64px",
+        "space-card": "22px"
       },
       "elevation": {
-        "shadow-card": "{glow-magenta}",
-        "shadow-raised": "{glow-cyan}"
+        "shadow-card": "{sombra-ninguna}",
+        "shadow-raised": "{sombra-ninguna}"
       }
     },
 

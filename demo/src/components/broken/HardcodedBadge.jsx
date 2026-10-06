@@ -2,8 +2,8 @@
  * 🐞 BUG INTENCIONAL · Demo 4
  *
  * Alguien copió los colores de Casa Aurora directamente del archivo de diseño.
- * En Aurora se ve perfecto. Cambia a Nocturne: sigue rosa pastel en medio
- * del club oscuro, porque un hex literal no participa del sistema de temas.
+ * En Aurora se ve perfecto. Cambia a Molino Central: sigue rosa pastel en medio
+ * de la panificadora gris grafito, porque un hex literal no participa del sistema de temas.
  *
  * Arreglo: usar roles, no valores → var(--surface-overlay), var(--on-surface), var(--accent).
  */

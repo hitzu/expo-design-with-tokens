@@ -14,7 +14,7 @@ import AntipatternDemo from './demos/AntipatternDemo.jsx';
 import HardcodedHexDemo from './demos/HardcodedHexDemo.jsx';
 import SurfacePairDemo from './demos/SurfacePairDemo.jsx';
 
-const TENANT_IDS = ['aurora', 'nocturne'];
+const TENANT_IDS = ['aurora', 'molino'];
 
 // Copia profunda del nivel semántico de cada tenant: es lo que edita el panel en vivo.
 function cloneSemanticTiers() {
@@ -51,7 +51,7 @@ export default function App() {
       const typing = event.target.closest?.('input, textarea, select');
       if (typing || event.metaKey || event.ctrlKey || event.altKey) return;
       if (event.key === 't') {
-        setTenantId((current) => (current === 'aurora' ? 'nocturne' : 'aurora'));
+        setTenantId((current) => (current === 'aurora' ? 'molino' : 'aurora'));
       }
     }
     window.addEventListener('keydown', handleKeyDown);

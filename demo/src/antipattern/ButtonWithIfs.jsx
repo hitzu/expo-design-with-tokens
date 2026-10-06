@@ -26,11 +26,11 @@ export default function ButtonWithIfs({ tenant, children }) {
     borderRadius = '28px';
     fontFamily = 'Georgia, serif';
     textTransform = 'none';
-  } else if (tenant === 'nocturne') {
-    background = '#ff2bd6';
-    color = '#07060d';
+  } else if (tenant === 'molino') {
+    background = '#ffc20e';
+    color = '#121417';
     borderRadius = '0px';
-    fontFamily = '"Arial Narrow", sans-serif';
+    fontFamily = '"Helvetica Neue", Arial, sans-serif';
     textTransform = 'uppercase';
   } else {
     // ¿Cliente 12? Nadie se acordó de este archivo: cae en un "default" que nadie diseñó.

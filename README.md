@@ -2,7 +2,9 @@
 
 Repo de la plática **"Design Tokens y multitenancy visual"**: dos clientes con estética opuesta, el mismo código, y un solo archivo de temas.
 
-> *Si el color vive en el componente, no tienes temas. Si vive en un token con nombre de rol, tienes multitenancy visual.*
+Repo: [github.com/hitzu/expo-design-with-tokens](https://github.com/hitzu/expo-design-with-tokens)
+
+> *Si tu componente dice "rosa", solo sirve para un cliente. Si dice "acento", sirve para todos.*
 
 ## Cómo correrlo
 
@@ -20,7 +22,7 @@ Las slides son un solo archivo: abre `slides/index.html` en el navegador (`→`/
 
 | Carpeta | Contenido |
 |---|---|
-| `demo/` | Vite + React. Dos tenants ficticios (**Casa Aurora** y **Nocturne**) renderizando la misma página. |
+| `demo/` | Vite + React. Dos reposterías ficticias (**Casa Aurora**, artesanal, y **Molino Central**, industrial) con la misma página: solo cambia el tema. |
 | `demo/src/themes/themes.json` | **El único lugar donde viven los colores.** Tokens en tres niveles. |
 | `demo/src/antipattern/` | Cómo **no** se hace: colores resueltos con `if (tenant === ...)`. |
 | `demo/src/components/broken/` | Errores intencionales para la demo (hex hardcodeado, pareja superficie/contenido rota). |

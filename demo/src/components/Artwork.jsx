@@ -1,7 +1,7 @@
 /*
  * Ilustración abstracta en SVG, sin imágenes externas.
  * Los rellenos leen --art-bg, --art-1, --art-2 y --art-3:
- * en Casa Aurora parecen pasteles; en Nocturne, luces de escenario.
+ * en Casa Aurora parecen pasteles; en Molino Central, piezas de una línea de producción.
  */
 const fill = (token) => ({ fill: `var(--${token})` });
 const stroke = (token) => ({ stroke: `var(--${token})` });

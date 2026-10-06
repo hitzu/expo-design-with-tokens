@@ -6,8 +6,8 @@
  *   texto  → var(--on-accent)          (familia accent)
  *
  * En Casa Aurora on-accent es cacao oscuro y por casualidad se lee bien.
- * En Nocturne on-accent es casi negro (pensado para ir sobre el neón)
- * y queda texto oscuro sobre superficie oscura: ilegible.
+ * En Molino Central on-accent es casi negro (pensado para ir sobre el
+ * amarillo de seguridad) y queda texto oscuro sobre superficie grafito: ilegible.
  *
  * Regla: cada surface-* va con on-surface. Fondo y texto se eligen en pareja.
  */
