@@ -1,0 +1,391 @@
+{
+  "path": "company",
+  "eventType": "Corporativo (per-event brand), navy/modern tone (references/layers.md worked example, all 6 contrast pairs verified >= 4.5)",
+  "previewRequest": {
+    "method": "POST",
+    "path": "/events/themes/preview",
+    "body": {
+      "themeOverrides": {
+        "tokens": {
+          "background": "#f4f6f9",
+          "surface": "#ffffff",
+          "primary": "#1e3a5f",
+          "onPrimary": "#ffffff",
+          "secondary": "#475569",
+          "onSecondary": "#ffffff",
+          "accent": "#0ea5e9",
+          "text": "#111827",
+          "textMuted": "#44546b",
+          "onSurface": "#111827",
+          "surfaceBorder": "#dbe3ee",
+          "divider": "#dbe3ee",
+          "fontHeading": "Inter",
+          "fontBody": "Inter"
+        },
+        "socialCta": {
+          "headline": {
+            "text": {
+              "es": "Síguenos",
+              "en": "Follow us"
+            }
+          },
+          "subtitle": {
+            "text": {
+              "es": "Entérate de nuestros próximos eventos",
+              "en": "Stay up to date with our next events"
+            }
+          },
+          "primaryAction": {
+            "channel": "whatsapp",
+            "label": {
+              "text": {
+                "es": "Escríbenos",
+                "en": "Message us"
+              }
+            },
+            "phone": "5212215775211",
+            "message": {
+              "text": {
+                "es": "Hola, vi el evento de {{honoreesName}}",
+                "en": "Hi, I saw {{honoreesName}}'s event"
+              }
+            }
+          },
+          "socials": {
+            "instagram": "https://www.instagram.com/acme-events",
+            "url": "https://acme-events.com"
+          }
+        },
+        "rewardPromo": {
+          "handle": "@acme.events",
+          "title": {
+            "text": {
+              "es": "¡Etiquétanos y gana un 10% de descuento!",
+              "en": "Tag us and get 10% off!"
+            }
+          },
+          "disclaimer": {
+            "text": {
+              "es": "Válido en tu próximo evento con Acme Events",
+              "en": "Valid on your next Acme Events booking"
+            }
+          }
+        }
+      },
+      "honoreesName": "Acme Events"
+    }
+  },
+  "steps": [
+    {
+      "step": 1,
+      "method": "POST",
+      "path": "/events/themes/preview",
+      "body": {
+        "themeOverrides": {
+          "tokens": {
+            "background": "#f4f6f9",
+            "surface": "#ffffff",
+            "primary": "#1e3a5f",
+            "onPrimary": "#ffffff",
+            "secondary": "#475569",
+            "onSecondary": "#ffffff",
+            "accent": "#0ea5e9",
+            "text": "#111827",
+            "textMuted": "#44546b",
+            "onSurface": "#111827",
+            "surfaceBorder": "#dbe3ee",
+            "divider": "#dbe3ee",
+            "fontHeading": "Inter",
+            "fontBody": "Inter"
+          },
+          "socialCta": {
+            "headline": {
+              "text": {
+                "es": "Síguenos",
+                "en": "Follow us"
+              }
+            },
+            "subtitle": {
+              "text": {
+                "es": "Entérate de nuestros próximos eventos",
+                "en": "Stay up to date with our next events"
+              }
+            },
+            "primaryAction": {
+              "channel": "whatsapp",
+              "label": {
+                "text": {
+                  "es": "Escríbenos",
+                  "en": "Message us"
+                }
+              },
+              "phone": "5212215775211",
+              "message": {
+                "text": {
+                  "es": "Hola, vi el evento de {{honoreesName}}",
+                  "en": "Hi, I saw {{honoreesName}}'s event"
+                }
+              }
+            },
+            "socials": {
+              "instagram": "https://www.instagram.com/acme-events",
+              "url": "https://acme-events.com"
+            }
+          },
+          "rewardPromo": {
+            "handle": "@acme.events",
+            "title": {
+              "text": {
+                "es": "¡Etiquétanos y gana un 10% de descuento!",
+                "en": "Tag us and get 10% off!"
+              }
+            },
+            "disclaimer": {
+              "text": {
+                "es": "Válido en tu próximo evento con Acme Events",
+                "en": "Valid on your next Acme Events booking"
+              }
+            }
+          }
+        },
+        "honoreesName": "Acme Events"
+      },
+      "notes": "Any warnings entry is a blocker; fix tokens and re-run."
+    },
+    {
+      "step": 2,
+      "method": "POST",
+      "path": "/theme-assets/upload-url",
+      "body": {
+        "ownerType": "event",
+        "ownerId": "{{event_id}}",
+        "slot": "logo",
+        "fileName": "acme-logo.svg",
+        "mime": "image/svg+xml"
+      },
+      "sets": [
+        "logo_path",
+        "logo_public_url",
+        "signed_url"
+      ]
+    },
+    {
+      "step": 3,
+      "method": "PUT",
+      "path": "{{signed_url}}",
+      "body": "<binary acme-logo.svg>",
+      "notes": "Content-Type: image/svg+xml."
+    },
+    {
+      "step": 4,
+      "method": "POST",
+      "path": "/theme-assets/upload-url",
+      "body": {
+        "ownerType": "event",
+        "ownerId": "{{event_id}}",
+        "slot": "splashIcon",
+        "fileName": "acme-logo.svg",
+        "mime": "image/svg+xml"
+      },
+      "sets": [
+        "splash_path",
+        "splash_public_url",
+        "signed_url"
+      ],
+      "notes": "Same file uploaded to the splashIcon slot (splash fallback)."
+    },
+    {
+      "step": 5,
+      "method": "PUT",
+      "path": "{{signed_url}}",
+      "body": "<binary acme-logo.svg>"
+    },
+    {
+      "step": 6,
+      "method": "POST",
+      "path": "/events/themes/preview",
+      "body": {
+        "themeOverrides": {
+          "tokens": {
+            "background": "#f4f6f9",
+            "surface": "#ffffff",
+            "primary": "#1e3a5f",
+            "onPrimary": "#ffffff",
+            "secondary": "#475569",
+            "onSecondary": "#ffffff",
+            "accent": "#0ea5e9",
+            "text": "#111827",
+            "textMuted": "#44546b",
+            "onSurface": "#111827",
+            "surfaceBorder": "#dbe3ee",
+            "divider": "#dbe3ee",
+            "fontHeading": "Inter",
+            "fontBody": "Inter"
+          },
+          "socialCta": {
+            "headline": {
+              "text": {
+                "es": "Síguenos",
+                "en": "Follow us"
+              }
+            },
+            "subtitle": {
+              "text": {
+                "es": "Entérate de nuestros próximos eventos",
+                "en": "Stay up to date with our next events"
+              }
+            },
+            "primaryAction": {
+              "channel": "whatsapp",
+              "label": {
+                "text": {
+                  "es": "Escríbenos",
+                  "en": "Message us"
+                }
+              },
+              "phone": "5212215775211",
+              "message": {
+                "text": {
+                  "es": "Hola, vi el evento de {{honoreesName}}",
+                  "en": "Hi, I saw {{honoreesName}}'s event"
+                }
+              }
+            },
+            "socials": {
+              "instagram": "https://www.instagram.com/acme-events",
+              "url": "https://acme-events.com"
+            }
+          },
+          "rewardPromo": {
+            "handle": "@acme.events",
+            "title": {
+              "text": {
+                "es": "¡Etiquétanos y gana un 10% de descuento!",
+                "en": "Tag us and get 10% off!"
+              }
+            },
+            "disclaimer": {
+              "text": {
+                "es": "Válido en tu próximo evento con Acme Events",
+                "en": "Valid on your next Acme Events booking"
+              }
+            }
+          },
+          "images": {
+            "logo": {
+              "path": "{{logo_path}}",
+              "url": "{{logo_public_url}}"
+            },
+            "splashIcon": {
+              "path": "{{splash_path}}",
+              "url": "{{splash_public_url}}"
+            }
+          }
+        },
+        "honoreesName": "Acme Events"
+      },
+      "notes": "Confirms the final overrides with images."
+    },
+    {
+      "step": 7,
+      "method": "PATCH",
+      "path": "/events/{{event_id}}",
+      "body": {
+        "honoreesNames": "Acme Events",
+        "eventThemeId": null,
+        "themeOverrides": {
+          "tokens": {
+            "background": "#f4f6f9",
+            "surface": "#ffffff",
+            "primary": "#1e3a5f",
+            "onPrimary": "#ffffff",
+            "secondary": "#475569",
+            "onSecondary": "#ffffff",
+            "accent": "#0ea5e9",
+            "text": "#111827",
+            "textMuted": "#44546b",
+            "onSurface": "#111827",
+            "surfaceBorder": "#dbe3ee",
+            "divider": "#dbe3ee",
+            "fontHeading": "Inter",
+            "fontBody": "Inter"
+          },
+          "socialCta": {
+            "headline": {
+              "text": {
+                "es": "Síguenos",
+                "en": "Follow us"
+              }
+            },
+            "subtitle": {
+              "text": {
+                "es": "Entérate de nuestros próximos eventos",
+                "en": "Stay up to date with our next events"
+              }
+            },
+            "primaryAction": {
+              "channel": "whatsapp",
+              "label": {
+                "text": {
+                  "es": "Escríbenos",
+                  "en": "Message us"
+                }
+              },
+              "phone": "5212215775211",
+              "message": {
+                "text": {
+                  "es": "Hola, vi el evento de {{honoreesName}}",
+                  "en": "Hi, I saw {{honoreesName}}'s event"
+                }
+              }
+            },
+            "socials": {
+              "instagram": "https://www.instagram.com/acme-events",
+              "url": "https://acme-events.com"
+            }
+          },
+          "rewardPromo": {
+            "handle": "@acme.events",
+            "title": {
+              "text": {
+                "es": "¡Etiquétanos y gana un 10% de descuento!",
+                "en": "Tag us and get 10% off!"
+              }
+            },
+            "disclaimer": {
+              "text": {
+                "es": "Válido en tu próximo evento con Acme Events",
+                "en": "Valid on your next Acme Events booking"
+              }
+            }
+          },
+          "images": {
+            "logo": {
+              "path": "{{logo_path}}",
+              "url": "{{logo_public_url}}"
+            },
+            "splashIcon": {
+              "path": "{{splash_path}}",
+              "url": "{{splash_public_url}}"
+            }
+          }
+        }
+      },
+      "notes": "themeOverrides is replaced whole: send the FULL object."
+    },
+    {
+      "step": 8,
+      "method": "GET",
+      "path": "/events/{{event_token}}/theme",
+      "body": null,
+      "notes": "Public, cached; verify params.honoreesName, socialCta and rewardPromo. Clear the gallery cache (\"Limpiar caché\") so the /fiesta hero shows the company name."
+    }
+  ],
+  "notes": [
+    "Nothing executed.",
+    "Company name lives in honoreesNames; texts use {{honoreesName}}.",
+    "rewardPromo: object = company promo, null = hidden, absent = Brillipoint promo. Handle and offer come from the operator, never invented.",
+    "eventThemeId: null = SystemDefault + Brillipoint default base; send a preset id only on request.",
+    "Next event for the same company: start from this themeOverrides, re-upload images with the new event id."
+  ]
+}

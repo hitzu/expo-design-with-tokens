@@ -1,0 +1,125 @@
+{
+  "path": "party",
+  "eventType": "XV / quinceañera, elegant-pink tone (references/layers.md worked example, all 6 contrast pairs verified >= 4.5)",
+  "previewRequest": {
+    "method": "POST",
+    "path": "/events/themes/preview",
+    "body": {
+      "eventThemeId": "{{preset_id}}",
+      "themeOverrides": {
+        "tokens": {
+          "background": "#fdf2f8",
+          "surface": "#ffffff",
+          "primary": "#db2777",
+          "onPrimary": "#ffffff",
+          "secondary": "#7c3aed",
+          "onSecondary": "#ffffff",
+          "accent": "#f59e0b",
+          "text": "#4a044e",
+          "textMuted": "#86198f",
+          "onSurface": "#4a044e",
+          "surfaceBorder": "#f3d5e8",
+          "divider": "#f3d5e8",
+          "fontHeading": "Playfair Display",
+          "fontBody": "DM Sans"
+        },
+        "decorations": {
+          "confetti": {
+            "enabled": true,
+            "colors": ["#db2777", "#7c3aed", "#f59e0b"],
+            "shapes": ["circle", "star"],
+            "amount": 120
+          }
+        }
+      },
+      "honoreesName": "Ana y Luis"
+    }
+  },
+  "steps": [
+    {
+      "step": 1,
+      "method": "GET",
+      "path": "/events/themes",
+      "body": null,
+      "sets": ["preset_id", "preset_key"]
+    },
+    {
+      "step": 2,
+      "method": "POST",
+      "path": "/theme-assets/upload-url",
+      "body": {
+        "ownerType": "event",
+        "ownerId": "{{event_id}}",
+        "slot": "cover",
+        "fileName": "cover.jpg",
+        "mime": "image/jpeg"
+      },
+      "sets": ["cover_path", "cover_public_url", "cover_signed_url"]
+    },
+    {
+      "step": 3,
+      "method": "PUT",
+      "path": "{{cover_signed_url}}",
+      "body": "<binary cover file, Content-Type: image/jpeg>"
+    },
+    {
+      "step": 4,
+      "method": "PATCH",
+      "path": "/events/{{event_id}}",
+      "body": {
+        "eventThemeId": "{{preset_id}}",
+        "themeOverrides": {
+          "tokens": {
+            "background": "#fdf2f8",
+            "surface": "#ffffff",
+            "primary": "#db2777",
+            "onPrimary": "#ffffff",
+            "secondary": "#7c3aed",
+            "onSecondary": "#ffffff",
+            "accent": "#f59e0b",
+            "text": "#4a044e",
+            "textMuted": "#86198f",
+            "onSurface": "#4a044e",
+            "surfaceBorder": "#f3d5e8",
+            "divider": "#f3d5e8",
+            "fontHeading": "Playfair Display",
+            "fontBody": "DM Sans"
+          },
+          "images": {
+            "cover": {
+              "path": "{{cover_path}}",
+              "url": "{{cover_public_url}}",
+              "alt": { "es": "Portada del evento", "en": "Event cover" }
+            }
+          },
+          "decorations": {
+            "confetti": {
+              "enabled": true,
+              "colors": ["#db2777", "#7c3aed", "#f59e0b"],
+              "shapes": ["circle", "star"],
+              "amount": 120
+            }
+          }
+        }
+      }
+    }
+  ],
+  "contrastTable": {
+    "primary/onPrimary": "#db2777 / #ffffff = 4.60",
+    "secondary/onSecondary": "#7c3aed / #ffffff = 5.70",
+    "surface/onSurface": "#ffffff / #4a044e = 14.80",
+    "background/text": "#fdf2f8 / #4a044e = 13.56",
+    "background/textMuted": "#fdf2f8 / #86198f = 7.54",
+    "surface/textMuted": "#ffffff / #86198f = 8.24"
+  },
+  "notes": [
+    "Numeric ids appear as quoted {{placeholders}} only to keep this file valid JSON; send them as JSON numbers.",
+    "Nothing executed. Run preview first and show warnings before step 4.",
+    "PATCH themeOverrides REPLACES the stored object: keep every block you want to retain.",
+    "Every token is set explicitly (pro rule): none left to backend derivation, so accent/onSurface/divider/surfaceBorder carry deliberate values, not fallbacks.",
+    "Cover must be 4:5, downloaded and uploaded by the operator (never an external URL). Skip steps 2-3 and images.cover when there is no cover.",
+    "fontHeading/fontBody are already loaded by the frontend (_document.tsx); no font request needed for this pairing.",
+    "socialCta and rewardPromo fall back to the code-owned Brillipoint default when no layer supplies them; do not author them for party.",
+    "Colors, names, and honoreesName are illustrative; always take real values from the operator."
+  ]
+}
